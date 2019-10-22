@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Богданов](https://up.htmlacademy.ru/react/2/user/580483).
-* Наставник: `Неизвестно`.
+* Наставник: [Искандер Мамедов](https://up.htmlacademy.ru/react/2/user/1227137).
 
 ---
 
