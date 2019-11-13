@@ -118,8 +118,7 @@ const MainScreen = (props) => {
                     </h2>
                     <p className="place-card__type">Private room</p>
                   </div>
-                </article>)
-                )
+                </article>))
               }
             </div>
           </section>
