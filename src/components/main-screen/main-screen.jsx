@@ -70,17 +70,17 @@ const MainScreen = () => {
             <b className="places__found">312 places to stay in Amsterdam</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
-              <span className="places__sorting-type" tabindex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
+              <span className="places__sorting-type" tabIndex="0">
+                Popular
+                <svg className="places__sorting-arrow" width="7" height="4">
+                  <use xlinkHref="#icon-arrow-select"></use>
+                </svg>
+              </span>
               <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabindex="0">Popular</li>
-                <li className="places__option" tabindex="0">Price: low to high</li>
-                <li className="places__option" tabindex="0">Price: high to low</li>
-                <li className="places__option" tabindex="0">Top rated first</li>
+                <li className="places__option places__option--active" tabIndex="0">Popular</li>
+                <li className="places__option" tabIndex="0">Price: low to high</li>
+                <li className="places__option" tabIndex="0">Price: high to low</li>
+                <li className="places__option" tabIndex="0">Top rated first</li>
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
@@ -94,7 +94,7 @@ const MainScreen = () => {
                   </a>
                 </div>
                 <div className="place-card__info">
-                  <div classNamef="place-card__price-wrapper">
+                  <div className="place-card__price-wrapper">
                     <div className="place-card__price">
                       <b className="place-card__price-value">&euro;120</b>
                       <span className="place-card__price-text">&#47;&nbsp;night</span>
@@ -108,7 +108,7 @@ const MainScreen = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 93%"></span>
+                      <span style={{width: `93%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -140,7 +140,7 @@ const MainScreen = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 80%"></span>
+                      <span style={{width: `80%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -172,7 +172,7 @@ const MainScreen = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 80%"></span>
+                      <span style={{width: `80%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -207,7 +207,7 @@ const MainScreen = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 100%"></span>
+                      <span style={{width: `100%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -239,7 +239,7 @@ const MainScreen = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style="width: 80%"></span>
+                      <span style={{width: `80%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
