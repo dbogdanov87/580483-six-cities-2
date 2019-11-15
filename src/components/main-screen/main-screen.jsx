@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const MainScreen = (props) => {
-  const {cardNames} = props;
+  const {cardNames, clickHandler} = props;
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -114,7 +114,7 @@ const MainScreen = (props) => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">{cardName}</a>
+                      <a href="#" onClick={clickHandler}>{cardName}</a>
                     </h2>
                     <p className="place-card__type">Private room</p>
                   </div>
@@ -133,6 +133,11 @@ const MainScreen = (props) => {
 
 MainScreen.propTypes = {
   cardNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  clickHandler: PropTypes.func.isRequired
+};
+
+MainScreen.defaultProps = {
+  clickHandler: () => null,
 };
 
 export default MainScreen;
