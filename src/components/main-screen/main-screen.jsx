@@ -131,13 +131,13 @@ const MainScreen = (props) => {
   </div>;
 };
 
-MainScreen.defaultProps = {
-  clickHandler: null,
-};
-
 MainScreen.propTypes = {
   cardNames: PropTypes.arrayOf(PropTypes.string).isRequired,
   clickHandler: PropTypes.func.isRequired
+};
+
+MainScreen.defaultProps = {
+  clickHandler: () => null,
 };
 
 export default MainScreen;
