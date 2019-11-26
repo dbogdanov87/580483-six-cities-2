@@ -3,9 +3,18 @@ import renderer from "react-test-renderer";
 import MainScreen from "./main-screen.jsx";
 
 it(`MainScreen is rendered correctly`, () => {
-  const cardNames = [`str1`, `str2`, `str3`, `str4`];
+  const offers = [{
+    id: 1,
+    img: `img`,
+    price: 25,
+    priceText: `night`,
+    bookmarkActive: true,
+    rating: `90%`,
+    cardName: `Beautiful`,
+    cardType: `privet`
+  }];
   const tree = renderer.create(<MainScreen
-    cardNames={cardNames}
+    offers={offers}
   />
   ).toJSON();
 

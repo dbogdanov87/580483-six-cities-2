@@ -1,8 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
+import CardOffer from "./card-offer.jsx";
 
-it(`App is rendered correctly`, () => {
+it(`CardOffer is rendered correctly`, () => {
   const offers = [{
     id: 1,
     img: `img`,
@@ -13,8 +13,11 @@ it(`App is rendered correctly`, () => {
     cardName: `Beautiful`,
     cardType: `privet`
   }];
-  const tree = renderer.create(<App
-    offers={offers}
+  const tree = renderer.create(<CardOffer
+    offer={offers[0]}
+    onClickCardName={()=> {}}
+    onMouseEnterCard={()=> {}}
+    onMouseOutCard={()=> {}}
   />
   ).toJSON();
 

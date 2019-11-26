@@ -1,8 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
+import ListOffers from "./list-offers.jsx";
 
-it(`App is rendered correctly`, () => {
+it(`ListOffers is rendered correctly`, () => {
   const offers = [{
     id: 1,
     img: `img`,
@@ -13,7 +13,7 @@ it(`App is rendered correctly`, () => {
     cardName: `Beautiful`,
     cardType: `privet`
   }];
-  const tree = renderer.create(<App
+  const tree = renderer.create(<ListOffers
     offers={offers}
   />
   ).toJSON();
