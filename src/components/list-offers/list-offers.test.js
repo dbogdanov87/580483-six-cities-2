@@ -5,7 +5,7 @@ import ListOffers from "./list-offers.jsx";
 it(`ListOffers is rendered correctly`, () => {
   const offers = [{
     id: 1,
-    img: `img`,
+    cardImage: `img`,
     price: 25,
     priceText: `night`,
     bookmarkActive: true,

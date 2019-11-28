@@ -9,7 +9,7 @@ describe(`Tests for card offer`, () => {
   it(`when you click on title, a callback will be called`, () => {
     const offers = [{
       id: 1,
-      img: `img`,
+      cardImage: `img`,
       price: 25,
       priceText: `night`,
       bookmarkActive: true,
@@ -34,7 +34,7 @@ describe(`Tests for card offer`, () => {
   it(`when you mouse enter on card, return correct information about card`, () => {
     const offers = [{
       id: 1,
-      img: `img`,
+      cardImage: `img`,
       price: 25,
       priceText: `night`,
       bookmarkActive: true,
