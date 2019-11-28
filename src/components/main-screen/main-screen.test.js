@@ -5,7 +5,7 @@ import MainScreen from "./main-screen.jsx";
 it(`MainScreen is rendered correctly`, () => {
   const offers = [{
     id: 1,
-    img: `img`,
+    cardImage: `img`,
     price: 25,
     priceText: `night`,
     bookmarkActive: true,

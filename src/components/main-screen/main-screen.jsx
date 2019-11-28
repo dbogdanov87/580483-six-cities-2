@@ -108,7 +108,7 @@ class MainScreen extends PureComponent {
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
+    cardImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     priceText: PropTypes.string.isRequired,
     bookmarkActive: PropTypes.bool.isRequired,

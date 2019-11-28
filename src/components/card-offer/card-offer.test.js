@@ -5,7 +5,7 @@ import CardOffer from "./card-offer.jsx";
 it(`CardOffer is rendered correctly`, () => {
   const offers = [{
     id: 1,
-    img: `img`,
+    cardImage: `img`,
     price: 25,
     priceText: `night`,
     bookmarkActive: true,

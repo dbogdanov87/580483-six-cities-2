@@ -5,7 +5,7 @@ const CardOffer = (props) => {
   const {
     offer: {
       id,
-      img,
+      cardImage,
       price,
       priceText,
       bookmarkActive,
@@ -25,7 +25,7 @@ const CardOffer = (props) => {
       onMouseOut={onMouseOutCard}>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={img} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={cardImage} width="260" height="200" alt="Place image"/>
         </a>
       </div>
       <div className="place-card__info">
@@ -50,7 +50,7 @@ const CardOffer = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#" onClick={onClickCardName}>{cardName}</a>
+          <a href="#" onClick={() => onClickCardName(id)}>{cardName}</a>
         </h2>
         <p className="place-card__type">{cardType}</p>
       </div>
@@ -60,7 +60,7 @@ const CardOffer = (props) => {
 CardOffer.propTypes = {
   offer: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
+    cardImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     priceText: PropTypes.string.isRequired,
     bookmarkActive: PropTypes.bool.isRequired,
