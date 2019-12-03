@@ -2,6 +2,8 @@ import React from "react";
 import renderer from "react-test-renderer";
 import App from "./app.jsx";
 
+jest.mock(`../map/map.jsx`);
+
 it(`App is rendered correctly`, () => {
   const offers = [{
     id: 1,

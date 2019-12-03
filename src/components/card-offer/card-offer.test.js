@@ -3,6 +3,11 @@ import renderer from "react-test-renderer";
 import CardOffer from "./card-offer.jsx";
 
 it(`CardOffer is rendered correctly`, () => {
+
+  const div = document.createElement(`div`);
+  div.id = `map`;
+  document.body.appendChild(div);
+
   const offers = [{
     id: 1,
     cardImage: `img`,
