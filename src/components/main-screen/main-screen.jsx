@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import ListOffers from "../list-offers/list-offers.jsx";
+import Map from "../map/map.jsx";
 
 class MainScreen extends PureComponent {
   constructor(props) {
@@ -95,7 +96,9 @@ class MainScreen extends PureComponent {
                 <ListOffers offers={offers}/>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map offers={offers}/>
+                </section>
               </div>
             </div>
           </div>
