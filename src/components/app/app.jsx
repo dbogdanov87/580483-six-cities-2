@@ -4,7 +4,7 @@ import MainScreen from "../main-screen/main-screen.jsx";
 import DetailsOffer from "../details-offer/details-offer.jsx";
 
 const getPageScreen = (props) => {
-  const {offers} = props;
+  const {offers, reviews, nearbyOffers} = props;
   const offerId = location.pathname.slice(-1);
   switch (location.pathname) {
     case `/`:
@@ -13,7 +13,11 @@ const getPageScreen = (props) => {
       const offerDetail = offers.find((offer) => {
         return offer.id === parseInt(offerId, 10);
       });
-      return <DetailsOffer offer={offerDetail} />;
+      return <DetailsOffer
+        offer={offerDetail}
+        reviews={reviews}
+        nearbyOffers={nearbyOffers}
+      />;
   }
   return null;
 };
@@ -28,6 +32,8 @@ App.propTypes = {
 
 getPageScreen.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  nearbyOffers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default App;
