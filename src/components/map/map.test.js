@@ -7,6 +7,18 @@ it(`Map is rendered correctly`, () => {
   const div = document.createElement(`div`);
   div.id = `map`;
   document.body.appendChild(div);
+
+  const createNodeMock = () => document.createElement(`div`);
+  const options = {createNodeMock};
+  const city = {
+    id: 2,
+    name: `Cologne`,
+    location: {
+      latitude: 50.9333300,
+      longitude: 6.9500000,
+      zoom: 12,
+    }
+  };
   const offers = [{
     id: 1,
     cardImage: `img`,
@@ -19,8 +31,9 @@ it(`Map is rendered correctly`, () => {
     cardType: `privet`
   }];
   const tree = renderer.create(<Map
+    activeCity={city}
     offers={offers}
-  />
+  />, options
   ).toJSON();
 
   expect(tree).toMatchSnapshot();
