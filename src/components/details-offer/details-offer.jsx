@@ -2,7 +2,6 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import ListOffers from "../list-offers/list-offers.jsx";
-import Map from "../map/map.jsx";
 
 class DetailsOffer extends PureComponent {
   constructor(props) {
@@ -33,7 +32,7 @@ class DetailsOffer extends PureComponent {
 
       },
       reviews,
-      nearbyOffers
+      nearbyOffers,
     } = this.props;
 
     return (
@@ -172,8 +171,7 @@ class DetailsOffer extends PureComponent {
               </section>
             </div>
           </div>
-          <section className="property__map">
-            <Map offers={nearbyOffers}/>
+          <section className="property__map map">
           </section>
         </section>
         <div className="container">

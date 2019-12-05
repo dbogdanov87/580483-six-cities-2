@@ -8,7 +8,7 @@ const getPageScreen = (props) => {
   const offerId = location.pathname.slice(-1);
   switch (location.pathname) {
     case `/`:
-      return <MainScreen offers={offers}/>;
+      return <MainScreen />;
     case `/offer` + offerId:
       const offerDetail = offers.find((offer) => {
         return offer.id === parseInt(offerId, 10);

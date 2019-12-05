@@ -1,14 +1,26 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+
+import {ActionCreator} from "../../reducer.js";
 import ListOffers from "../list-offers/list-offers.jsx";
+import ListCities from "../list-cities/list-cities.jsx";
 import Map from "../map/map.jsx";
+import cities from "../../mocks/cities.js";
 
 class MainScreen extends PureComponent {
   constructor(props) {
     super(props);
   }
+
   render() {
-    const {offers} = this.props;
+    const {
+      offers,
+      city,
+      changeCityClickHandler,
+    } = this.props;
+
+    const numberOffers = offers.length;
 
     return (
       <div className="page page--gray page--main">
@@ -40,36 +52,7 @@ class MainScreen extends PureComponent {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
+                <ListCities cities={cities} activeCity={city} changeCityClickHandler={changeCityClickHandler}/>
               </ul>
             </section>
           </div>
@@ -77,7 +60,7 @@ class MainScreen extends PureComponent {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">312 places to stay in Amsterdam</b>
+                <b className="places__found">{numberOffers} places to stay in Amsterdam</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -97,7 +80,7 @@ class MainScreen extends PureComponent {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers}/>
+                  <Map offers={offers} activeCity={city}/>
                 </section>
               </div>
             </div>
@@ -109,17 +92,26 @@ class MainScreen extends PureComponent {
 }
 
 MainScreen.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    cardImage: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    priceText: PropTypes.string.isRequired,
-    bookmarkActive: PropTypes.bool.isRequired,
-    rating: PropTypes.string.isRequired,
-    cardName: PropTypes.string.isRequired,
-    cardType: PropTypes.string.isRequired,
-  }).isRequired
-  )
+  offers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  city: PropTypes.shape({}).isRequired,
+  changeCityClickHandler: PropTypes.func.isRequired,
 };
 
-export default MainScreen;
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  city: state.city,
+  offers: state.offers,
+  cities,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCityClickHandler: (city) => {
+    dispatch(ActionCreator.changeCity(city));
+    dispatch(ActionCreator.getListOffers(city));
+  }
+});
+
+export {MainScreen};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+
+
