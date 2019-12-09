@@ -8,7 +8,10 @@ import offers from './mocks/offers.js';
 import reviews from "./mocks/reviews.js";
 import nearbyOffers from "./mocks/nearbyOffers.js";
 
-const store = createStore(reducer);
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+);
 const init = () => {
   ReactDOM.render(<Provider store={store}>
     <App
