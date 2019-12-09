@@ -20,7 +20,7 @@ const offers = [
         maxAdults: 4
       },
     rating: `90%`,
-    cardName: `Beautiful luxurious apartment at great location`,
+    cardName: `Beautiful luxurious apartment at great locations`,
     cardType: `privet room`,
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
     user: {
