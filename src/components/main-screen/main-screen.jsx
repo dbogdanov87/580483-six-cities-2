@@ -5,12 +5,33 @@ import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 import ListOffers from "../list-offers/list-offers.jsx";
 import ListCities from "../list-cities/list-cities.jsx";
+import SortingOffers from "../sorting-offers/sorting-offers.jsx";
 import Map from "../map/map.jsx";
 import cities from "../../mocks/cities.js";
 
 class MainScreen extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isOpenSorting: false,
+    };
+
+    this.toggleSortingClickHandler = this.toggleSortingClickHandler.bind(this);
+    this.sortingSelectionClickHandler = this.sortingSelectionClickHandler.bind(this);
+  }
+
+  toggleSortingClickHandler() {
+    this.setState((oldState) => ({
+      isOpenSorting: !oldState.isOpenSorting
+    }));
+  }
+
+  sortingSelectionClickHandler(sortingName) {
+    const {sortingOffersByName, offers, city, getListOffers} = this.props;
+    sortingOffersByName(sortingName);
+    getListOffers(city, offers, sortingName);
+    this.toggleSortingClickHandler();
   }
 
   render() {
@@ -18,8 +39,10 @@ class MainScreen extends PureComponent {
       offers,
       city,
       changeCityClickHandler,
+      sortingName,
     } = this.props;
 
+    const {isOpenSorting} = this.state;
     const numberOffers = offers.length;
 
     return (
@@ -52,7 +75,7 @@ class MainScreen extends PureComponent {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <ListCities cities={cities} activeCity={city} changeCityClickHandler={changeCityClickHandler}/>
+                <ListCities cities={cities} activeCity={city} offers={offers} sortingName={sortingName} changeCityClickHandler={changeCityClickHandler}/>
               </ul>
             </section>
           </div>
@@ -60,22 +83,13 @@ class MainScreen extends PureComponent {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{numberOffers} places to stay in Amsterdam</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"></use>
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                    <li className="places__option" tabIndex="0">Price: low to high</li>
-                    <li className="places__option" tabIndex="0">Price: high to low</li>
-                    <li className="places__option" tabIndex="0">Top rated first</li>
-                  </ul>
-                </form>
+                <b className="places__found">{numberOffers} {offers.length === 1 ? `place` : `places`} to stay in Amsterdam</b>
+                <SortingOffers
+                  sortingName={sortingName}
+                  isOpenSorting={isOpenSorting}
+                  toggleSortingClickHandler={this.toggleSortingClickHandler}
+                  sortingSelectionClickHandler={this.sortingSelectionClickHandler}
+                />
                 <ListOffers offers={offers}/>
               </section>
               <div className="cities__right-section">
@@ -95,19 +109,25 @@ MainScreen.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   city: PropTypes.shape({}).isRequired,
   changeCityClickHandler: PropTypes.func.isRequired,
+  sortingName: PropTypes.string.isRequired,
+  sortingOffersByName: PropTypes.func.isRequired,
+  getListOffers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
   offers: state.offers,
   cities,
+  sortingName: state.sortedByName,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCityClickHandler: (city) => {
+  changeCityClickHandler: (city, offers, sortingName) => {
     dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.getListOffers(city));
-  }
+    dispatch(ActionCreator.getListOffers(city, offers, sortingName));
+  },
+  getListOffers: (city, offers, sortingName) => dispatch(ActionCreator.getListOffers(city, offers, sortingName)),
+  sortingOffersByName: (sortedName) => dispatch(ActionCreator.sortingOffersByName(sortedName)),
 });
 
 export {MainScreen};

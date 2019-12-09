@@ -47,7 +47,7 @@ class Map extends PureComponent {
 
   _removeMarkersOffers() {
     this.markers.forEach((marker) => {
-      this._map.removeLayer(marker);
+      this.map.removeLayer(marker);
     });
   }
 
