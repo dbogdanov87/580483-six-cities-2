@@ -2,21 +2,22 @@ import leaflet from "leaflet";
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
-const icon = leaflet.icon({
-  iconUrl: `img/pin.svg`,
-  iconSize: [30, 30]
-});
-
 class Map extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.icon = leaflet.icon({
+      iconUrl: `img/pin.svg`,
+      iconSize: [30, 30]
+    });
+
+    this.activeIcon = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
+      iconSize: [30, 30]
+    });
+
     this.mapRef = React.createRef();
     this.markers = [];
-  }
-
-  render() {
-    return <div id="map" style={{height: `100%`}} ref={this.mapRef}></div>;
   }
 
   _init(activeCity, offersList, container) {
@@ -39,9 +40,18 @@ class Map extends PureComponent {
   _addMarkerOffers(offers) {
     this._removeMarkersOffers();
     offers.map((offer) => {
+      let marker = leaflet.marker(offer.coordinates, {icon: this.icon});
+      marker.on('mouseover', (evt) => {
+        evt.target.setIcon(this.activeIcon);
       leaflet
-        .marker(offer.coordinates, {icon})
-        .addTo(this.map);
+        .marker()
+      }).addTo(this.map);
+
+      marker.on('mouseout', (evt) => {
+        evt.target.setIcon(this.icon);
+        leaflet
+          .marker()
+      }).addTo(this.map);
     });
   }
 
@@ -50,7 +60,6 @@ class Map extends PureComponent {
       this.map.removeLayer(marker);
     });
   }
-
 
   componentDidMount() {
     const {activeCity, offers} = this.props;
@@ -61,6 +70,10 @@ class Map extends PureComponent {
     const {activeCity, offers} = this.props;
     this._addMarkerOffers(offers);
     this.map.setView([activeCity.location.latitude, activeCity.location.longitude], activeCity.location.zoom);
+  }
+
+  render() {
+    return <div id="map" style={{height: `100%`}} ref={this.mapRef} />;
   }
 }
 
