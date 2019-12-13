@@ -5,13 +5,12 @@ import ListOffers from "./list-offers.jsx";
 it(`ListOffers is rendered correctly`, () => {
   const offers = [{
     id: 1,
-    cardImage: `img`,
+    preview_image: `img`,
     price: 25,
-    priceText: `night`,
-    bookmarkActive: true,
+    is_favorite: true,
     rating: `90%`,
-    cardName: `Beautiful`,
-    cardType: `privet`
+    title: `Beautiful`,
+    type: `privet`
   }];
   const tree = renderer.create(<ListOffers
     offers={offers}

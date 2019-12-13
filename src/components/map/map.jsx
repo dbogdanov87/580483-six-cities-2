@@ -2,9 +2,13 @@ import leaflet from "leaflet";
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
+import {getCityCoordinates} from "../../reducer.js";
+
 class Map extends PureComponent {
   constructor(props) {
     super(props);
+
+    console.log(props);
 
     this.icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
@@ -21,11 +25,12 @@ class Map extends PureComponent {
   }
 
   _init(activeCity, offersList, container) {
-    this.city = [activeCity.location.latitude, activeCity.location.longitude];
-    this.zoom = activeCity.location.zoom;
+    console.log(this.props, ' dhasjkhd kasjk dhas hjkdhas kjd');
+    this.city = getCityCoordinates(activeCity, offersList);
+    console.log(this.city);
     this.map = leaflet.map(container, {
       center: this.city,
-      zoom: this.zoom,
+      zoom: 12,
       zoomControl: false,
       marker: true
     });
@@ -37,22 +42,27 @@ class Map extends PureComponent {
     this._addMarkerOffers(offersList);
   }
 
+  _getCoordinatesByOffer(offer) {
+    return [offer.location.latitude, offer.location.longitude];
+  }
+
   _addMarkerOffers(offers) {
+    const displayActivePin = (coordinates) => {
+      console.log(coordinates);
+      if (coordinates.length !== 0) {
+        leaflet
+          .marker(coordinates, {icon: this.activeIcon})
+          .addTo(this.map);
+      }
+      return;
+    };
+
     this._removeMarkersOffers();
     offers.map((offer) => {
-      let marker = leaflet.marker(offer.coordinates, {icon: this.icon});
-      marker.on('mouseover', (evt) => {
-        evt.target.setIcon(this.activeIcon);
-      leaflet
-        .marker()
-      }).addTo(this.map);
-
-      marker.on('mouseout', (evt) => {
-        evt.target.setIcon(this.icon);
-        leaflet
-          .marker()
-      }).addTo(this.map);
+      leaflet.marker(this._getCoordinatesByOffer(offer), {icon: this.icon})
+        .addTo(this.map);
     });
+    displayActivePin(this.props.activeOfferCoordinates);
   }
 
   _removeMarkersOffers() {
@@ -69,7 +79,7 @@ class Map extends PureComponent {
   componentDidUpdate() {
     const {activeCity, offers} = this.props;
     this._addMarkerOffers(offers);
-    this.map.setView([activeCity.location.latitude, activeCity.location.longitude], activeCity.location.zoom);
+    this.map.setView(getCityCoordinates(activeCity, offers), this.map.options.zoom);
   }
 
   render() {
@@ -83,14 +93,8 @@ Map.propTypes = {
         coordinates: PropTypes.array.isRequired
       })
   ),
-  activeCity: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    location: PropTypes.shape({
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+  activeCity: PropTypes.string.isRequired,
+  activeOfferCoordinates: PropTypes.array.isRequired
 };
 
 export default Map;

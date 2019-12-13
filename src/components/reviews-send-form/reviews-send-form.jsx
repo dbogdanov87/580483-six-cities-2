@@ -1,4 +1,4 @@
-import Raect, {PureComponent} from "react";
+import React, {PureComponent} from "react";
 
 class ReviewsSendForm extends PureComponent {
   constructor(props) {

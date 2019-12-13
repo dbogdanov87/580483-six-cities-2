@@ -1,15 +1,15 @@
-import cities from "../src/mocks/cities.js";
-import offers from "../src/mocks/offers.js";
-import {SORTED_OPTIONS} from "../src/constants.js";
+import {SORTED_OPTIONS, DEFAULT_CITY} from "../src/constants.js";
 
-const activeCity = cities[0];
-
-const getSortedOffers = (city, allOffers, sortingBy) => {
-  const filteredOffers = allOffers.filter((item) => item.city.id === city.id);
-  return sortingOffersByNames(filteredOffers, sortingBy);
+export const getOffersByCity = (offers, cityName) => {
+  return offers.filter((offer) => offer.city.name === cityName)
 };
 
-const sortingOffersByNames = (filteredOffers, sortingBy) => {
+export const getCityCoordinates = (cityName, offers) => {
+  const offer = offers.find((item) => item.city.name === cityName);
+  return [offer.city.location.latitude, offer.city.location.longitude];
+};
+
+export const sortingOffers = (filteredOffers, sortingBy) => {
   switch (sortingBy) {
     case `Popular`: return filteredOffers;
     case `Price: low to high`:
@@ -23,29 +23,59 @@ const sortingOffersByNames = (filteredOffers, sortingBy) => {
 };
 
 const initialState = {
-  city: activeCity,
-  offers: getSortedOffers(activeCity, offers, SORTED_OPTIONS[0].name),
-  sortedByName: SORTED_OPTIONS[0].name,
+  allOffers: [],
+  cityOffers: [],
+  city: DEFAULT_CITY,
+  favorites: [],
+  isAuthorized: false,
+  userData: {},
+  sortingName: SORTED_OPTIONS[0].name,
+  cities: [],
+  activeOfferCoordinates: []
 };
 
-const ActionCreator = {
+export const ActionCreator = {
   changeCity: (city) => ({
     type: `CHANGE_CITY`,
     payload: city
   }),
-  getListOffers: (city, filteredOffers, sortingBy) => ({
-    type: `GET_LIST_OFFERS`,
-    payload: getSortedOffers(city, filteredOffers, sortingBy)
-  }),
-  sortingOffersByName: (sortedName) => {
+  getListOffers: (offers) => {
+    return {
+      type: `GET_LIST_OFFERS`,
+      payload: offers
+    }
+  },
+  changeSortingName: (sortingName) => {
     return {
       type: `SORTING_OFFERS_BY_NAME`,
-      payload: sortedName,
+      payload: sortingName,
     };
   },
+
+  getCityOffers: (offers) => ({
+    type: `GET_CITY_OFFERS`,
+    payload: offers
+  }),
+
+  setActivePinCoordinates: (coordinates) => ({
+    type: `SET_ACTIVE_PIN`,
+    payload: coordinates
+  }),
+
+  setUserData: (userData) => ({
+    type: `SET_USER_DATA`,
+    payload: userData
+  }),
+
+  isAuthorized: (flag) => {
+    return {
+      type: `USER_AUTHORIZE`,
+      payload: flag
+    }
+  }
 };
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case `CHANGE_CITY`:
       return Object.assign({}, state, {
@@ -53,18 +83,54 @@ const reducer = (state = initialState, action) => {
       });
     case `GET_LIST_OFFERS`:
       return Object.assign({}, state, {
-        offers: action.payload,
+        allOffers: action.payload,
       });
     case `SORTING_OFFERS_BY_NAME`:
       return Object.assign({}, state, {
-        sortedByName: action.payload,
+        sortingName: action.payload,
       });
+    case `GET_CITY_OFFERS`:
+      return Object.assign({}, state, {
+        cityOffers: action.payload,
+      });
+
+  case `SET_USER_DATA`:
+    return Object.assign({}, state, {
+      userData: action.payload,
+    });
+
+    case `USER_AUTHORIZE`: return Object.assign({}, state, {
+      isAuthorized: action.payload
+    });
+
+    case `SET_ACTIVE_PIN`: return Object.assign({}, state, {
+      activeOfferCoordinates: action.payload
+    });
   }
   return state;
 };
 
-export {
-  ActionCreator,
-  getSortedOffers,
-  reducer,
+export const Operations = {
+  getListOffers: () => (dispatch, state, api) => {
+    return api.get(`/hotels`)
+      .then((response) => {
+        dispatch(ActionCreator.getListOffers(response.data));
+      });
+  },
+
+  setUserData: (email, password) => (dispatch, state, api) => {
+    const userParams = {
+      email,
+      password,
+    };
+    return api.post(`/login`, userParams)
+      .then((response) => {
+        dispatch(ActionCreator.setUserData(response.data));
+      }).then(dispatch(ActionCreator.isAuthorized(true)));
+  },
+
+  setAuthorizationFlag: (flag) => (dispatch, _) => {
+    dispatch(ActionCreator.isAuthorized(flag));
+  },
+
 };

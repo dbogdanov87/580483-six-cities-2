@@ -8,9 +8,6 @@ import thunk from "redux-thunk";
 
 import App from './components/app/app.jsx';
 import {createAPI} from './api';
-// import offers from './mocks/offers.js';
-// import reviews from "./mocks/reviews.js";
-// import nearbyOffers from "./mocks/nearbyOffers.js";
 
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
@@ -23,11 +20,7 @@ const init = () => {
   );
 
   ReactDOM.render(<Provider store={store}>
-    <App
-      offers={offers}
-      reviews={reviews}
-      nearbyOffers={nearbyOffers}>
-    </App>
+      <App></App>
   </Provider>,
   document.querySelector(`#root`));
 };

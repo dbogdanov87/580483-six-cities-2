@@ -23,3 +23,5 @@ class FavoritesList extends PureComponent {
     );
   }
 }
+
+export default FavoritesList;
