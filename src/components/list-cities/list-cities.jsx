@@ -4,7 +4,7 @@ import {ActionCreator} from "../../reducer.js";
 import {connect} from 'react-redux';
 
 const ListCities = (props) => {
-  const {cities, offers, sortingName, activeCity, changeCityClickHandler} = props;
+  const {cities, offers, activeCity, changeCityClickHandler} = props;
 
   return (
     cities.map((city, it) => (
@@ -12,7 +12,7 @@ const ListCities = (props) => {
         <a
           className={`locations__item-link tabs__item ${city === activeCity && `tabs__item--active`}`}
           href="#"
-          onClick={() => changeCityClickHandler(city)}>
+          onClick={() => changeCityClickHandler(city, offers)}>
           <span>{city}</span>
         </a>
       </li>)

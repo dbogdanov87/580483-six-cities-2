@@ -11,19 +11,19 @@ import FavoritesList from "../favorites-list/favorites-list.jsx";
 import withAuth from "../../hocs/with-auth.jsx";
 
 const App = (props) => {
-  const {allOffers} = props;
+  const {isAuthorized, offers} = props;
 
-  if (allOffers.length === 0) {
+  if (offers.length === 0) {
     props.getListOffers();
   }
 
-  return allOffers.length === 0 ? null : (
+  return offers.length === 0 ? null : (
     <Router history={history}>
       <Switch>
         <Route exact path={`/`} component={MainScreen} />
         <Route exact path={`/login`} component={SignIn} />
         <Route exact path={`/offer/:id`} component={DetailsOffer} />
-        <Route exact path={`/favorites`} component={withAuth(FavoritesList)} />
+        <Route exact path={`/favorites`} component={isAuthorized ? FavoritesList : SignIn} />
         <Route render={ () => <div>style={
           {
             fontSize: `30px`,
@@ -38,11 +38,13 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  allOffers: PropTypes.array.isRequired,
+  offers: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  allOffers: state.allOffers,
+  offers: state.offers,
+  city: state.city,
+  isAuthorized: state.isAuthorized,
   getListOffers: state.getListOffers,
 });
 

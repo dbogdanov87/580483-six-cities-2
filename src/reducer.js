@@ -23,9 +23,10 @@ export const sortingOffers = (filteredOffers, sortingBy) => {
 };
 
 const initialState = {
-  allOffers: [],
+  offers: [],
   cityOffers: [],
   city: DEFAULT_CITY,
+  reviews: [],
   favorites: [],
   isAuthorized: false,
   userData: {},
@@ -57,6 +58,16 @@ export const ActionCreator = {
     payload: offers
   }),
 
+  getFavorites: (favorites) => ({
+    type: `GET_FAVORITES`,
+    payload: favorites
+  }),
+
+  getReviews: (review) =>({
+    type: `GET_REVIEWS`,
+    payload: review
+  }),
+
   setActivePinCoordinates: (coordinates) => ({
     type: `SET_ACTIVE_PIN`,
     payload: coordinates
@@ -83,21 +94,32 @@ export const reducer = (state = initialState, action) => {
       });
     case `GET_LIST_OFFERS`:
       return Object.assign({}, state, {
-        allOffers: action.payload,
-      });
-    case `SORTING_OFFERS_BY_NAME`:
-      return Object.assign({}, state, {
-        sortingName: action.payload,
+        offers: action.payload,
       });
     case `GET_CITY_OFFERS`:
       return Object.assign({}, state, {
         cityOffers: action.payload,
       });
 
-  case `SET_USER_DATA`:
-    return Object.assign({}, state, {
-      userData: action.payload,
-    });
+    case `GET_FAVORITES`:
+      return Object.assign({}, state, {
+        favorites: action.payload,
+      });
+
+    case `GET_REVIEWS`:
+      return Object.assign({}, state, {
+        reviews: action.payload,
+      });
+
+    case `SORTING_OFFERS_BY_NAME`:
+      return Object.assign({}, state, {
+        sortingName: action.payload,
+      });
+
+    case `SET_USER_DATA`:
+      return Object.assign({}, state, {
+        userData: action.payload,
+      });
 
     case `USER_AUTHORIZE`: return Object.assign({}, state, {
       isAuthorized: action.payload
@@ -116,6 +138,38 @@ export const Operations = {
       .then((response) => {
         dispatch(ActionCreator.getListOffers(response.data));
       });
+  },
+
+  getReviews: (id) => (dispatch, state, api) => {
+    return api.get(`/comments/` + id)
+      .then((response) => {
+        dispatch(ActionCreator.getReviews(response.data));
+      });
+  },
+
+  loadFavorites: () => (dispatch, state, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.getFavorites(response.data));
+      });
+  },
+
+  loadReviews: (id) => (dispatch, state, api) => {
+    return api.get(`/comments/` + id)
+      .then((response) => {
+        dispatch(ActionCreator.getReviews(response.data));
+      });
+  },
+
+  sendComment: (id, comment) => (dispatch, state, api) => {
+    return api.post(`/comments/` + id, comment)
+      .then((response) => {
+        dispatch(ActionCreator.getReviews(response.data));
+      });
+  },
+
+  setFavorite: (hotelId, status) => (dispatch, state, api) => {
+    return api.post(`/favorite/` + hotelId + `/` + status);
   },
 
   setUserData: (email, password) => (dispatch, state, api) => {

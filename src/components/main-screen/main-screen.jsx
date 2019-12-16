@@ -2,11 +2,13 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {ActionCreator, getOffersByCity, sortingOffers} from "../../reducer.js";
+import {ActionCreator, getOffersByCity, sortingOffers, getCityCoordinates} from "../../reducer.js";
+import EmptyOffers from "../empty-offers/empty-offers.jsx";
 import ListOffers from "../list-offers/list-offers.jsx";
 import ListCities from "../list-cities/list-cities.jsx";
 import Header from "../header/header.jsx";
 import SortingOffers from "../sorting-offers/sorting-offers.jsx";
+import {MAX_COUNT_CITIES} from "../../constants.js";
 import Map from "../map/map.jsx";
 
 class MainScreen extends PureComponent {
@@ -22,11 +24,16 @@ class MainScreen extends PureComponent {
     if (props.cityOffers.length === 0) {
       const cityOffers = getOffersByCity(props.offers, props.city);
       props.getCityOffers(cityOffers);
+      //props.setSortedOffers(props.offers, props.city)
     }
+
+    this.activeOfferCoordinates = getCityCoordinates(props.city, props.offers);
+    this.props.setActivePinCoordinates(this.activeOfferCoordinates);
 
     this.toggleSortingClickHandler = this.toggleSortingClickHandler.bind(this);
     this.sortingSelectionClickHandler = this.sortingSelectionClickHandler.bind(this);
     this.offerHoverHandler = this.offerHoverHandler.bind(this);
+    //this.redirectToLoginHandler = this.redirectToLoginHandler(this);
   }
 
   toggleSortingClickHandler() {
@@ -34,10 +41,14 @@ class MainScreen extends PureComponent {
       isOpenSorting: !oldState.isOpenSorting
     }));
   }
+  //
+  // redirectToLoginHandler() {
+  //   this.props.history.push(`/login`);
+  // }
 
   getAllCities(offers) {
     const uniqueCities = offers.reduce((acc, elem) => acc.add(elem.city.name), new Set());
-    return Array.from(uniqueCities).slice(0, 6);
+    return Array.from(uniqueCities).slice(0, MAX_COUNT_CITIES);
   }
 
   offerHoverHandler(id) {
@@ -47,7 +58,7 @@ class MainScreen extends PureComponent {
   }
 
   sortingSelectionClickHandler(sortingName) {
-    const {changeSortingName, cityOffers, offers} = this.props;
+    const {changeSortingName, cityOffers} = this.props;
     changeSortingName(sortingName);
     sortingOffers(cityOffers, sortingName);
     this.toggleSortingClickHandler();
@@ -67,7 +78,6 @@ class MainScreen extends PureComponent {
     const {isOpenSorting} = this.state;
     const numberOffers = cityOffers.length;
 
-
     return (
       <div className="page page--gray page--main">
         <Header />
@@ -76,7 +86,7 @@ class MainScreen extends PureComponent {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <ListCities cities={cities} activeCity={city} cityOffers={cityOffers} sortingName={sortingName} changeCityClickHandler={changeCityClickHandler}/>
+                <ListCities cities={cities} activeCity={city} cityOffers={cityOffers} offers={offers} sortingName={sortingName} changeCityClickHandler={changeCityClickHandler} />
               </ul>
             </section>
           </div>
@@ -91,12 +101,16 @@ class MainScreen extends PureComponent {
                   toggleSortingClickHandler={this.toggleSortingClickHandler}
                   sortingSelectionClickHandler={this.sortingSelectionClickHandler}
                 />
-                <ListOffers offers={this.props.cityOffers} offerHoverHandler={this.offerHoverHandler}/>
+                {
+                  numberOffers > 0
+                    ? <ListOffers offers={cityOffers} offerHoverHandler={this.offerHoverHandler} />
+                    : <EmptyOffers city={city}/>
+                }
               </section>
               <div className="cities__right-section">
-                {/*<section className="cities__map map">*/}
-                  {/*<Map offers={offers} activeCity={city} activeOfferCoordinates={this.props.activeOfferCoordinates}/>*/}
-                {/*</section>*/}
+                <section className="cities__map map">
+                  <Map offers={offers} activeCity={city} activeOfferCoordinates={this.props.activeOfferCoordinates}/>
+                </section>
               </div>
             </div>
           </div>
@@ -110,14 +124,14 @@ MainScreen.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({})),
   city: PropTypes.string.isRequired,
   changeCityClickHandler: PropTypes.func,
-  //sortingName: PropTypes.string,
+  sortingName: PropTypes.string,
   changeSortingName: PropTypes.func,
   getListOffers: PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
-  offers: state.allOffers,
+  offers: state.offers,
   cities: state.cities,
   cityOffers: state.cityOffers,
   getCityOffers: state.getCityOffers,
@@ -130,9 +144,12 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCityClickHandler: (city) => {
+  changeCityClickHandler: (city, offers) => {
     dispatch(ActionCreator.changeCity(city));
+    const cityOffers = getOffersByCity(offers, city);
+    dispatch(ActionCreator.getCityOffers(cityOffers));
   },
+
   getCityOffers: (offers) => {
     dispatch(ActionCreator.getCityOffers(offers));
   },

@@ -8,8 +8,6 @@ class Map extends PureComponent {
   constructor(props) {
     super(props);
 
-    console.log(props);
-
     this.icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
@@ -25,7 +23,6 @@ class Map extends PureComponent {
   }
 
   _init(activeCity, offersList, container) {
-    console.log(this.props, ' dhasjkhd kasjk dhas hjkdhas kjd');
     this.city = getCityCoordinates(activeCity, offersList);
     console.log(this.city);
     this.map = leaflet.map(container, {
@@ -48,7 +45,6 @@ class Map extends PureComponent {
 
   _addMarkerOffers(offers) {
     const displayActivePin = (coordinates) => {
-      console.log(coordinates);
       if (coordinates.length !== 0) {
         leaflet
           .marker(coordinates, {icon: this.activeIcon})
@@ -78,6 +74,7 @@ class Map extends PureComponent {
 
   componentDidUpdate() {
     const {activeCity, offers} = this.props;
+    this._removeMarkersOffers();
     this._addMarkerOffers(offers);
     this.map.setView(getCityCoordinates(activeCity, offers), this.map.options.zoom);
   }

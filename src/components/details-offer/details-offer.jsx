@@ -1,8 +1,13 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+
+import {MAX_NEAR_PLACES} from "../../constants.js";
+import {Operations, getOffersByCity} from "../../reducer.js";
+import Header from "../header/header.jsx";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
-import ListOffers from "../list-offers/list-offers.jsx";
+import ReviewsSendForm from "../reviews-send-form/reviews-send-form.jsx";
+import CardOffer from "../card-offer/card-offer.jsx";
 
 class DetailsOffer extends PureComponent {
   constructor(props) {
@@ -10,163 +15,138 @@ class DetailsOffer extends PureComponent {
   }
 
   render() {
-
     const id = this.props.match.params.id;
-    const {offers} = this.props;
+    const {city, offers} = this.props;
     const offer = offers.find((item) => item.id === Number(id));
     const avatarUrl = `../` + offer.host.avatar_url;
+    const nearbyOffers = getOffersByCity(offers, city).slice(0, MAX_NEAR_PLACES);
+    let listReviews = [];
+
+    if (listReviews.length === 0) {
+      this.props.loadReviews(id);
+      listReviews = this.props.reviews.slice(0, 11);
+    }
+
+    const offerHoverHandler = (offerItem) => {
+      return offerItem;
+    };
+
+    const submitHandler = (comment) => {
+      props.sendComment(props.match.params.id, comment);
+    };
 
     return (
-      <main className="page__main page__main--property">
-        <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              {
-                offer.images.map((img, i) => (
-                  <div className="property__image-wrapper" key={i}>
-                    <img className="property__image" src={img} alt="Photo studio"/>
-                  </div>))
-              }
+      <div className="page">
+      <Header />
+        <main className="page__main page__main--property">
+          <section className="property">
+            <div className="property__gallery-container container">
+              <div className="property__gallery">
+                {
+                  offer.images.map((img, i) => (
+                    <div className="property__image-wrapper" key={i}>
+                      <img className="property__image" src={img} alt="Photo studio"/>
+                    </div>))
+                }
+              </div>
             </div>
-          </div>
-          <div className="property__container container">
-            <div className="property__wrapper">
-              {
-                offer.is_premium &&
-                <div className="property__mark">
-                  <span>Premium</span>
+            <div className="property__container container">
+              <div className="property__wrapper">
+                {
+                  offer.is_premium &&
+                  <div className="property__mark">
+                    <span>Premium</span>
+                  </div>
+                }
+                <div className="property__name-wrapper">
+                  <h1 className="property__name">
+                    {offer.title}
+                  </h1>
+                  <button className="property__bookmark-button button" type="button">
+                    <svg className="property__bookmark-icon" width="31" height="33">
+                      <use xlinkHref="#icon-bookmark"></use>
+                    </svg>
+                    <span className="visually-hidden">To bookmarks</span>
+                  </button>
                 </div>
-              }
-              <div className="property__name-wrapper">
-                <h1 className="property__name">
-                  {offer.title}
-                </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
-              </div>
-              <div className="property__rating rating">
-                <div className="property__stars rating__stars">
-                  <span style={{width: offer.rating}}></span>
-                  <span className="visually-hidden">Rating</span>
+                <div className="property__rating rating">
+                  <div className="property__stars rating__stars">
+                    <span style={{width: offer.rating}}></span>
+                    <span className="visually-hidden">Rating</span>
+                  </div>
+                  <span className="property__rating-value rating__value">4.8</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
-              </div>
-              <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {offer.type}
-                </li>
-                <li className="property__feature property__feature--bedrooms">
-                  {offer.bedrooms}
-                </li>
-                <li className="property__feature property__feature--adults">
-                  {offer.max_adults}
-                </li>
-              </ul>
-              <div className="property__price">
-                <b className="property__price-value">&euro;{offer.price}</b>
-                <span className="property__price-text">&nbsp;night</span>
-              </div>
-              <div className="property__inside">
-                <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  {
-                    offer.goods.map((item, i) => (
-                      <li className="property__inside-item" key={item + i}>
-                        {item}
-                      </li>))
-                  }
+                <ul className="property__features">
+                  <li className="property__feature property__feature--entire">
+                    {offer.type}
+                  </li>
+                  <li className="property__feature property__feature--bedrooms">
+                    {offer.bedrooms}
+                  </li>
+                  <li className="property__feature property__feature--adults">
+                    {offer.max_adults}
+                  </li>
                 </ul>
-              </div>
-              <div className="property__host">
-                <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
-                  </div>
-                  <span className="property__user-name">
-                    {offer.host.name}
-                  </span>
-                  <span className="property__user-status">
-                    {offer.host.is_pro ? `Pro` : `Free`}
-                  </span>
+                <div className="property__price">
+                  <b className="property__price-value">&euro;{offer.price}</b>
+                  <span className="property__price-text">&nbsp;night</span>
                 </div>
-                <div className="property__description">
-                  <p className="property__text">
-                    {offer.host.description}
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
+                <div className="property__inside">
+                  <h2 className="property__inside-title">What&apos;s inside</h2>
+                  <ul className="property__inside-list">
+                    {
+                      offer.goods.map((item, i) => (
+                        <li className="property__inside-item" key={item + i}>
+                          {item}
+                        </li>))
+                    }
+                  </ul>
                 </div>
-              </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                {/*<ReviewsList reviews={reviews}/>*/}
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
+                <div className="property__host">
+                  <h2 className="property__host-title">Meet the host</h2>
+                  <div className="property__host-user user">
+                    <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                      <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
+                    </div>
+                    <span className="property__user-name">
+                      {offer.host.name}
+                    </span>
+                    <span className="property__user-status">
+                      {offer.host.is_pro ? `Pro` : `Free`}
+                    </span>
                   </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+                  <div className="property__description">
+                    <p className="property__text">
+                      {offer.host.description}
                     </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
                   </div>
-                </form>
-              </section>
+                </div>
+                <section className="property__reviews reviews">
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{listReviews.length}</span></h2>
+                  {<ReviewsList reviews={listReviews}/>}
+                  {this.props.isAuthorized && <ReviewsSendForm />}
+                </section>
+              </div>
             </div>
+            <section className="property__map map">
+            </section>
+          </section>
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">Other places in the neighbourhood</h2>
+              <div className="near-places__list places__list">
+                {nearbyOffers.map((offer, i) => {
+                  return <CardOffer
+                    offer={offer}
+                    key={offer.id + offer.title}
+                    onOfferOver={offerHoverHandler}
+                  />;
+                })}
+              </div>
+            </section>
           </div>
-          <section className="property__map map">
-          </section>
-        </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {/*<ListOffers offers={nearbyOffers}/>*/}
-            </div>
-          </section>
-        </div>
-      </main>
+        </main>
+      </div>
     );
   }
 }
@@ -177,9 +157,19 @@ DetailsOffer.propTypes = {
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
-  offers: state.allOffers,
+  offers: state.offers,
+  reviews: state.reviews,
+  isAuthorized: state.isAuthorized,
 });
+
+const mapDispatchToProps = {
+  setFavorite: (id, status) => Operations.setFavorite(id, status),
+  loadFavorites: Operations.loadFavorites,
+  loadReviews: (id) => Operations.loadReviews(id),
+  sendComment: (id, comment) => Operations.sendComment(id, comment)
+
+};
 
 export {DetailsOffer};
 
-export default connect(mapStateToProps)(DetailsOffer);
+export default connect(mapStateToProps, mapDispatchToProps)(DetailsOffer);

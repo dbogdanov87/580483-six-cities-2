@@ -43,6 +43,7 @@ class SignIn extends PureComponent {
     evt.preventDefault();
     if (this.authorizeData.email && this.authorizeData.password) {
       this.props.setUserData(this.authorizeData.email, this.authorizeData.password);
+      this.props.loadFavorites();
       this.props.history.push(`/`);
     }
   }
@@ -95,6 +96,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 const mapDispatchToProps = {
   setAuthorizationFlag: () => Operations.setAuthorizationFlag(true),
   setUserData: (email, password) => Operations.setUserData(email, password),
+  loadFavorites: Operations.loadFavorites,
 };
 
 export {SignIn};

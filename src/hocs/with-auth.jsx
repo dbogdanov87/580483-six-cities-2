@@ -9,9 +9,10 @@ const withAuth = (Component) => {
     }
 
     render() {
-      const {isUserAuth} = this.props;
+      console.log(this.props);
+      const {isAuthorized} = this.props;
 
-      if (!isUserAuth) {
+      if (!isAuthorized) {
         return <Redirect to='/login'/>;
       }
       return <Component {...this.props}/>;
@@ -19,7 +20,7 @@ const withAuth = (Component) => {
   }
 
   WithAuth.propTypes = {
-    isUserAuth: PropTypes.bool.isRequired
+    isAuthorized: PropTypes.bool.isRequired
   };
 
   return WithAuth;

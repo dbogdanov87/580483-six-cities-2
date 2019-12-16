@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+
+import {Operations} from '../../reducer.js';
 
 const CardOffer = (props) => {
   const {
@@ -8,15 +11,39 @@ const CardOffer = (props) => {
       id,
       preview_image,
       price,
-      is_favorite,
       is_premium,
       rating,
       title,
       type
     },
+    isAuthorized,
     offerHoverHandler,
   } = props;
 
+  //console.log(props);
+
+  let statusFavorites;
+
+  if (props.favorites.length > 0) {
+    statusFavorites = props.favorites.find((item) => item.id === id) ? 1 : 0;
+  }
+
+  const bookmarkClickHandler = () => {
+    if (props.isAuthorized) {
+      if (statusFavorites === 1) {
+        statusFavorites = 0;
+        props.setFavorite(id, statusFavorites);
+      } else {
+        statusFavorites = 1;
+        props.setFavorite(id, statusFavorites);
+      }
+      props.loadFavorites();
+    } //else {
+      //props.history.push(`/login`);
+    //}
+  };
+
+  const bookmarkRef = React.createRef();
   const linkAddress = () => {
     return `/offer/${id}`;
   };
@@ -43,8 +70,8 @@ const CardOffer = (props) => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className={
-            is_favorite ? `place-card__bookmark-button--active button` : `place-card__bookmark-button button`}
-          type="button">
+            statusFavorites === 1 && isAuthorized ? `place-card__bookmark-button--active button` : `place-card__bookmark-button button` }
+          type="button" ref={bookmarkRef} onClick={bookmarkClickHandler}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"/>
             </svg>
@@ -78,4 +105,16 @@ CardOffer.propTypes = {
   onClickCardName: PropTypes.func,
 };
 
-export default CardOffer;
+
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  favorites: state.favorites,
+  isAuthorized: state.isAuthorized,
+});
+
+const mapDispatchToProps = {
+  setFavorite: (id, status) => Operations.setFavorite(id, status),
+  loadFavorites: Operations.loadFavorites,
+};
+
+export {CardOffer};
+export default connect(mapStateToProps, mapDispatchToProps)(CardOffer);

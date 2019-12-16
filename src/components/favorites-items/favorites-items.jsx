@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import favoritesPlace from "../favorites-places/favorites-places.jsx";
+import FavoritesPlace from "../favorites-places/favorites-places.jsx";
 
 class FavoritesItems extends PureComponent {
   constructor(props) {
@@ -9,8 +9,11 @@ class FavoritesItems extends PureComponent {
 
   render() {
     const {
+      favorites,
       city,
     } = this.props;
+
+    //console.log(city);
 
     return (
       <li className="favorites__locations-items">
@@ -23,7 +26,7 @@ class FavoritesItems extends PureComponent {
         </div>
         <div className="favorites__places">
           {
-            <favoritesPlace />
+            favorites.map((favorite, index) => <FavoritesPlace key={index} favorite={favorite}/>)
           }
         </div>
       </li>
@@ -32,7 +35,7 @@ class FavoritesItems extends PureComponent {
 }
 
 FavoritesItems.propTypes = {
-  city: PropTypes.string.isRequired,
+  city: PropTypes.string,
 };
 
 export default FavoritesItems;
