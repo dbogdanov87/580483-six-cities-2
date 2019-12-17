@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {ActionCreator} from "../../reducer.js";
-import {connect} from 'react-redux';
 
 const ListCities = (props) => {
   const {cities, offers, activeCity, changeCityClickHandler} = props;

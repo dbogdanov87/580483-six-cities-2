@@ -38,6 +38,7 @@ ListOffers.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   })).isRequired,
+  offerHoverHandler: PropTypes.func,
 };
 
 export default ListOffers;

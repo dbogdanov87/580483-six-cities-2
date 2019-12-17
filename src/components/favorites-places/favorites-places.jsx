@@ -1,8 +1,10 @@
 import React from "react";
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
 
 import {Operations} from "../../reducer.js";
+import {updateRating} from "../../utils/utils.js";
 
 const FavoritesPlace = (props) => {
 
@@ -40,7 +42,7 @@ const FavoritesPlace = (props) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: props.favorite.rating}} />
+            <span style={{width: updateRating(props.favorite.rating)}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -50,7 +52,13 @@ const FavoritesPlace = (props) => {
         <p className="place-card__type">{props.favorite.type}</p>
       </div>
     </article>
-  )
+  );
+};
+
+FavoritesPlace.propTypes = {
+  setFavorite: PropTypes.func,
+  favorites: PropTypes.array,
+  favorite: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {

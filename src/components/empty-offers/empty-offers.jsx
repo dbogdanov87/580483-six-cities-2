@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const EmptyOffers = (props) => {
   const {city} = props;
@@ -17,5 +18,10 @@ const EmptyOffers = (props) => {
     </div>
   );
 };
+
+EmptyOffers.propTypes = {
+  city: PropTypes.string,
+};
+
 
 export default EmptyOffers;

@@ -1,9 +1,11 @@
 import React, {PureComponent} from "react";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
 import Header from "../header/header.jsx";
 import {Operations} from "../../reducer.js";
 import FavoritesItems from "../favorites-items/favorites-items.jsx";
+import FavoritesEmpty from "../favorites-empty/favorites-empty.jsx";
 
 class FavoritesList extends PureComponent {
   constructor(props) {
@@ -14,9 +16,9 @@ class FavoritesList extends PureComponent {
   }
 
   render() {
-    return (
+    return (this.props.favorites.length === 0) ? <FavoritesEmpty /> : (
       <div>
-        <Header/>
+        <Header />
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">
@@ -31,6 +33,11 @@ class FavoritesList extends PureComponent {
     );
   }
 }
+
+FavoritesList.propTypes = {
+  loadFavorites: PropTypes.func,
+  favorites: PropTypes.array,
+};
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   favorites: state.favorites,

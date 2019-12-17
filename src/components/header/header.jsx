@@ -1,6 +1,7 @@
 import React from "react";
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
 
 const Header = (props) => {
   const {isAuthorized, userData} = props;
@@ -33,6 +34,11 @@ const Header = (props) => {
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  isAuthorized: PropTypes.bool,
+  userData: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {

@@ -85,6 +85,9 @@ class SignIn extends PureComponent {
 
 SignIn.propTypes = {
   userData: PropTypes.object,
+  setUserData: PropTypes.func,
+  loadFavorites: PropTypes.func,
+  history: PropTypes.string
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {

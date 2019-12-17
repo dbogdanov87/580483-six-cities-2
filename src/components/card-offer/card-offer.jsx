@@ -19,10 +19,7 @@ const CardOffer = (props) => {
     },
     isAuthorized,
     offerHoverHandler,
-    redirectToLogin,
   } = props;
-
-  console.log(props);
 
   let statusFavorites;
 
@@ -40,9 +37,7 @@ const CardOffer = (props) => {
         props.setFavorite(id, statusFavorites);
       }
       props.loadFavorites();
-     } //else {
-    //   renderRedirect();
-    // }
+    }
   };
 
   const bookmarkRef = React.createRef();
@@ -53,7 +48,11 @@ const CardOffer = (props) => {
   return (
     <article className="cities__place-card place-card"
       key={title + id}
-      onMouseOver={() => {offerHoverHandler(id)}}>
+      onMouseOver={
+        () => {
+          offerHoverHandler(id);
+        }
+      }>
       {
         is_premium &&
           <div className="place-card__mark">
@@ -101,10 +100,17 @@ CardOffer.propTypes = {
     price: PropTypes.number.isRequired,
     is_favorite: PropTypes.bool.isRequired,
     rating: PropTypes.number.isRequired,
+    is_premium: PropTypes.bool,
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
   onClickCardName: PropTypes.func,
+  offerHoverHandler: PropTypes.func,
+  isAuthorized: PropTypes.bool,
+  favorites: PropTypes.array,
+  setFavorite: PropTypes.func,
+  loadFavorites: PropTypes.func,
+
 };
 
 

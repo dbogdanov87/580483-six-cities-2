@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {ActionCreator, getOffersByCity, sortingOffers, getCityCoordinates} from "../../reducer.js";
+import {ActionCreator, getOffersByCity, sortingOffers} from "../../reducer.js";
 import EmptyOffers from "../empty-offers/empty-offers.jsx";
 import ListOffers from "../list-offers/list-offers.jsx";
 import ListCities from "../list-cities/list-cities.jsx";
@@ -12,7 +12,7 @@ import {MAX_COUNT_CITIES} from "../../constants.js";
 import Map from "../map/map.jsx";
 import withSorted from "../../hocs/with-sorted.jsx";
 
-const WithSorted= withSorted(SortingOffers);
+const WithSorted = withSorted(SortingOffers);
 
 class MainScreen extends PureComponent {
   constructor(props) {
@@ -29,21 +29,9 @@ class MainScreen extends PureComponent {
       props.getCityOffers(cityOffers);
     }
 
-    //this.toggleSortingClickHandler = this.toggleSortingClickHandler.bind(this);
     this.sortingSelectionClickHandler = this.sortingSelectionClickHandler.bind(this);
     this.offerHoverHandler = this.offerHoverHandler.bind(this);
-    //this.redirectToLoginHandler = this.redirectToLoginHandler(this);
   }
-
-  // toggleSortingClickHandler() {
-  //   this.setState((oldState) => ({
-  //     isOpenSorting: !oldState.isOpenSorting
-  //   }));
-  // }
-  //
-  // redirectToLoginHandler() {
-  //   this.props.history.push(`/login`);
-  // }
 
   getAllCities(offers) {
     const uniqueCities = offers.reduce((acc, elem) => acc.add(elem.city.name), new Set());
@@ -126,7 +114,10 @@ MainScreen.propTypes = {
   changeCityClickHandler: PropTypes.func,
   sortingName: PropTypes.string,
   changeSortingName: PropTypes.func,
-  getListOffers: PropTypes.func,
+  getCityOffers: PropTypes.func,
+  cityOffers: PropTypes.array,
+  setActivePinCoordinates: PropTypes.func,
+  activeOfferCoordinates: PropTypes.array,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {

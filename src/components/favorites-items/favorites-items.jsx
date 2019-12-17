@@ -4,7 +4,7 @@ import FavoritesPlace from "../favorites-places/favorites-places.jsx";
 
 class FavoritesItems extends PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -12,8 +12,6 @@ class FavoritesItems extends PureComponent {
       favorites,
       city,
     } = this.props;
-
-    //console.log(city);
 
     return (
       <li className="favorites__locations-items">
@@ -36,6 +34,7 @@ class FavoritesItems extends PureComponent {
 
 FavoritesItems.propTypes = {
   city: PropTypes.string,
+  favorites: PropTypes.array,
 };
 
 export default FavoritesItems;

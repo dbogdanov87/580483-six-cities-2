@@ -1,7 +1,7 @@
 import {SORTED_OPTIONS, DEFAULT_CITY} from "../src/constants.js";
 
 export const getOffersByCity = (offers, cityName) => {
-  return offers.filter((offer) => offer.city.name === cityName)
+  return offers.filter((offer) => offer.city.name === cityName);
 };
 
 export const getCityCoordinates = (cityName, offers) => {
@@ -10,7 +10,6 @@ export const getCityCoordinates = (cityName, offers) => {
 };
 
 export const sortingOffers = (filteredOffers, sortingBy) => {
-  //console.log(filteredOffers);
   switch (sortingBy) {
     case `Popular`: return filteredOffers;
     case `Price: low to high`:
@@ -45,7 +44,7 @@ export const ActionCreator = {
     return {
       type: `GET_LIST_OFFERS`,
       payload: offers
-    }
+    };
   },
   changeSortingName: (sortingName) => {
     return {
@@ -83,7 +82,7 @@ export const ActionCreator = {
     return {
       type: `USER_AUTHORIZE`,
       payload: flag
-    }
+    };
   }
 };
 
@@ -184,8 +183,7 @@ export const Operations = {
       }).then(dispatch(ActionCreator.isAuthorized(true)));
   },
 
-  setAuthorizationFlag: (flag) => (dispatch, _) => {
+  setAuthorizationFlag: (flag) => (dispatch, ) => {
     dispatch(ActionCreator.isAuthorized(flag));
   },
-
 };

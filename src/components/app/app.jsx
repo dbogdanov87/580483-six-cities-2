@@ -23,14 +23,14 @@ const App = (props) => {
         <Route exact path={`/login`} component={SignIn} />
         <Route exact path={`/offer/:id`} component={DetailsOffer} />
         <Route exact path={`/favorites`} component={isAuthorized ? FavoritesList : SignIn} />
-        <Route render={ () => <div>style={
+        <Route render={ () => <div style={
           {
             fontSize: `30px`,
             position: `absolute`,
             width: `100%`,
             top: `50%`,
-            textAlign: `center`}}>Ups... Page not found</div>
-        } />
+            textAlign: `center`}}>`Ups... Page not found`</div>
+        }/>
       </Switch>
     </Router>
   );
@@ -38,6 +38,8 @@ const App = (props) => {
 
 App.propTypes = {
   offers: PropTypes.array.isRequired,
+  isAuthorized: PropTypes.bool,
+  getListOffers: PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {

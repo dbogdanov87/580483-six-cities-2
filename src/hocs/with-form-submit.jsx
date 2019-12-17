@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import {MIN_LENGTH_COMMENT_REVIWS, MAX_LENGTH_COMMENT_REVIEWS} from "../constants.js";
@@ -109,7 +109,7 @@ const withFormSubmit = (Component) => {
   }
 
   WithFormSubmit.propTypes = {
-    onSubmitClick: PropTypes.func,
+    submitClick: PropTypes.func,
   };
 
   return WithFormSubmit;

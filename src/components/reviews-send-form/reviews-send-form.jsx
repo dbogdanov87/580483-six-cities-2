@@ -1,4 +1,5 @@
 import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
 
 import {MIN_LENGTH_COMMENT_REVIWS} from "../../constants.js";
 
@@ -67,5 +68,17 @@ class ReviewsSendForm extends PureComponent {
     );
   }
 }
+
+ReviewsSendForm.propTypes = {
+  submitHandler: PropTypes.func,
+  starsChangeHandler: PropTypes.func,
+  textComment: PropTypes.string,
+  starsRef: PropTypes.object,
+  formRef: PropTypes.object,
+  starRef: PropTypes.object,
+  textRef: PropTypes.object,
+  changeHandler: PropTypes.func,
+  buttonRef: PropTypes.object,
+};
 
 export default ReviewsSendForm;
