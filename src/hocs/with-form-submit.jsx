@@ -1,3 +1,8 @@
+import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
+
+import {MIN_LENGTH_COMMENT_REVIWS, MAX_LENGTH_COMMENT_REVIEWS} from "../constants.js";
+
 const withFormSubmit = (Component) => {
   class WithFormSubmit extends React.PureComponent {
     constructor() {
@@ -6,7 +11,7 @@ const withFormSubmit = (Component) => {
         isTextCorrect: false,
         isStarsChosen: false,
         isValid: false,
-        title: ``,
+        textComment: ``,
         stars: 0,
       };
 
@@ -18,7 +23,7 @@ const withFormSubmit = (Component) => {
 
       this._starsChangeHandler = this._starsChangeHandler.bind(this);
       this._submitHandler = this._submitHandler.bind(this);
-      this._handlerChange = this._handlerChange.bind(this);
+      this._textAreaChangeHandler = this._textAreaChangeHandler.bind(this);
     }
 
     _starsChangeHandler(evt) {
@@ -34,14 +39,18 @@ const withFormSubmit = (Component) => {
       }
     }
 
-    _handlerChange(event) {
-      this.setState({title: event.target.value});
-      if (this.state.title.length >= 50) {
+    _textAreaChangeHandler(evt) {
+      this.setState({textComment: evt.target.value});
+      if (this.state.textComment.length >= MIN_LENGTH_COMMENT_REVIWS) {
         this.setState.isTextCorrect = true;
+        this.buttonRef.current.disabled = true;
 
         if (this.state.isStarsChosen) {
           this.buttonRef.current.disabled = false;
         }
+      }
+      if (this.state.textComment.length >= MAX_LENGTH_COMMENT_REVIEWS) {
+        this.buttonRef.current.disabled = true;
       }
     }
 
@@ -60,20 +69,19 @@ const withFormSubmit = (Component) => {
       return null;
     }
 
-    _submitHandle(evt) {
+    _submitHandler(evt) {
       evt.preventDefault();
       this.formRef.current.disabled = true;
 
       const comment = {
         rating: this.state.stars,
-        comment: this.state.title
+        comment: this.state.textComment
       };
       if (this.setState.isTextCorrect && this.state.isStarsChosen) {
-        this.props.onSubmitClick(comment);
-        this.textRef.current.value = ``;
+        this.props.submitClick(comment);
         this.formRef.current.reset();
         this.textRef.current.value = ``;
-        this.setState.title = ``;
+        this.setState.textComment = ``;
         this.buttonRef.current.disabled = true;
         this.setState.stars = 0;
 
@@ -86,15 +94,15 @@ const withFormSubmit = (Component) => {
     render() {
       return <Component
         {...this.props}
-        submitHandler={this._submitHandle}
+        submitHandler={this._submitHandler}
         starsChangeHandler={this._starsChangeHandler}
-        handlerChange={this._handlerChange}
+        changeHandler={this._textAreaChangeHandler}
         formRef={this.formRef}
         starsRef={this.starsRef}
         textRef={this.textRef}
         starRef={this.starRef}
         buttonRef={this.buttonRef}
-        title={this.state.title}
+        textComment={this.state.textComment}
       />;
     }
 

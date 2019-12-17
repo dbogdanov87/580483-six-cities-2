@@ -1,5 +1,7 @@
 import React, {PureComponent} from "react";
 
+import {MIN_LENGTH_COMMENT_REVIWS} from "../../constants.js";
+
 class ReviewsSendForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -10,7 +12,7 @@ class ReviewsSendForm extends PureComponent {
     this.starRef = props.starRef;
     this.starsChangeHandler = props.starsChangeHandler;
     this.textRef = props.textRef;
-    this.handleChange = props.handleChange;
+    this.changeHandler = props.changeHandler;
     this.buttonRef = props.buttonRef;
   }
 
@@ -54,12 +56,12 @@ class ReviewsSendForm extends PureComponent {
             </svg>
           </label>
         </div>
-        <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={this.handleChange} ref={this.textRef}/>
+        <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={this.changeHandler} ref={this.textRef}/>
         <div className="reviews__button-wrapper">
           <p className="reviews__help">
-            To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+            To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_LENGTH_COMMENT_REVIWS} characters</b>.
           </p>
-          <button className="reviews__submit form__submit button" type="submit" disabled="" ref={this.buttonRef}>Submit</button>
+          <button className="reviews__submit form__submit button" type="submit" ref={this.buttonRef} disabled>Submit</button>
         </div>
       </form>
     );

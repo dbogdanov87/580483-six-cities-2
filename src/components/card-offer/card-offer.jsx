@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 
-import {Operations} from '../../reducer.js';
+import {Operations} from "../../reducer.js";
+import {updateRating} from "../../utils/utils.js";
 
 const CardOffer = (props) => {
   const {
@@ -18,9 +19,10 @@ const CardOffer = (props) => {
     },
     isAuthorized,
     offerHoverHandler,
+    redirectToLogin,
   } = props;
 
-  //console.log(props);
+  console.log(props);
 
   let statusFavorites;
 
@@ -38,9 +40,9 @@ const CardOffer = (props) => {
         props.setFavorite(id, statusFavorites);
       }
       props.loadFavorites();
-    } //else {
-      //props.history.push(`/login`);
-    //}
+     } //else {
+    //   renderRedirect();
+    // }
   };
 
   const bookmarkRef = React.createRef();
@@ -80,7 +82,7 @@ const CardOffer = (props) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: rating}}/>
+            <span style={{width: updateRating(rating)}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

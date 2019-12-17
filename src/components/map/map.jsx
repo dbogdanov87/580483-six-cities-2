@@ -9,12 +9,12 @@ class Map extends PureComponent {
     super(props);
 
     this.icon = leaflet.icon({
-      iconUrl: `img/pin.svg`,
+      iconUrl: `../img/pin.svg`,
       iconSize: [30, 30]
     });
 
     this.activeIcon = leaflet.icon({
-      iconUrl: `img/pin-active.svg`,
+      iconUrl: `../img/pin-active.svg`,
       iconSize: [30, 30]
     });
 
@@ -24,7 +24,6 @@ class Map extends PureComponent {
 
   _init(activeCity, offersList, container) {
     this.city = getCityCoordinates(activeCity, offersList);
-    console.log(this.city);
     this.map = leaflet.map(container, {
       center: this.city,
       zoom: 12,
@@ -53,7 +52,6 @@ class Map extends PureComponent {
       return;
     };
 
-    this._removeMarkersOffers();
     offers.map((offer) => {
       leaflet.marker(this._getCoordinatesByOffer(offer), {icon: this.icon})
         .addTo(this.map);
@@ -87,7 +85,7 @@ class Map extends PureComponent {
 Map.propTypes = {
   offers: PropTypes.arrayOf(
       PropTypes.shape({
-        coordinates: PropTypes.array.isRequired
+        coordinates: PropTypes.array
       })
   ),
   activeCity: PropTypes.string.isRequired,

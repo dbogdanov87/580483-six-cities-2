@@ -8,28 +8,46 @@ import Header from "../header/header.jsx";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import ReviewsSendForm from "../reviews-send-form/reviews-send-form.jsx";
 import CardOffer from "../card-offer/card-offer.jsx";
+import withFormSubmit from "../../hocs/with-form-submit.jsx";
+import Map from "../map/map.jsx";
+import {updateRating} from "../../utils/utils.js";
+import {MAX_COUNT_REVIEWS} from "../../constants.js";
 
-class DetailsOffer extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+const DetailsOffer = (props) => {
 
-  render() {
-    const id = this.props.match.params.id;
-    const {city, offers} = this.props;
+    const id = props.match.params.id;
+    const {city, offers} = props;
     const offer = offers.find((item) => item.id === Number(id));
     const avatarUrl = `../` + offer.host.avatar_url;
     const nearbyOffers = getOffersByCity(offers, city).slice(0, MAX_NEAR_PLACES);
-    let listReviews = [];
+    const currentOfferCoordinates = [offer.location.latitude, offer.location.longitude];
 
-    if (listReviews.length === 0) {
-      this.props.loadReviews(id);
-      listReviews = this.props.reviews.slice(0, 11);
+    if (props.reviews.length === 0) {
+      props.loadReviews(id);
     }
+    let listReviews = props.reviews.slice(0, MAX_COUNT_REVIEWS).sort((a, b) => new Date(b.date) - new Date(a.date));
 
     const offerHoverHandler = (offerItem) => {
       return offerItem;
     };
+
+    let statusFavorites = props.favorites.find((item) => item.id === Number(id)) ? 1 : 0;
+    const bookmarkClickHandler = () => {
+      if (props.isAuthorized) {
+        if (statusFavorites === 1) {
+          statusFavorites = 0;
+          props.setFavorite(id, statusFavorites);
+        } else {
+          statusFavorites = 1;
+          props.setFavorite(id, statusFavorites);
+        }
+        props.loadFavorites();
+      } else {
+        props.history.push(`/login`);
+      }
+    };
+
+    const CommentWrapped = withFormSubmit(ReviewsSendForm);
 
     const submitHandler = (comment) => {
       props.sendComment(props.match.params.id, comment);
@@ -62,19 +80,19 @@ class DetailsOffer extends PureComponent {
                   <h1 className="property__name">
                     {offer.title}
                   </h1>
-                  <button className="property__bookmark-button button" type="button">
+                  <button className={statusFavorites === 1 && props.isAuthorized ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`} type="button" onClick={bookmarkClickHandler}>
                     <svg className="property__bookmark-icon" width="31" height="33">
-                      <use xlinkHref="#icon-bookmark"></use>
+                      <use xlinkHref="#icon-bookmark" />
                     </svg>
                     <span className="visually-hidden">To bookmarks</span>
                   </button>
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: offer.rating}}></span>
+                    <span style={{width: updateRating(offer.rating)}} />
                     <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="property__rating-value rating__value">4.8</span>
+                  <span className="property__rating-value rating__value">{Math.round(offer.rating)}</span>
                 </div>
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
@@ -124,22 +142,25 @@ class DetailsOffer extends PureComponent {
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{listReviews.length}</span></h2>
                   {<ReviewsList reviews={listReviews}/>}
-                  {this.props.isAuthorized && <ReviewsSendForm />}
+                  {props.isAuthorized && <CommentWrapped submitClick={submitHandler}/>}
                 </section>
               </div>
             </div>
             <section className="property__map map">
+              <Map offers={nearbyOffers}
+                   activeCity={city}
+                   activeOfferCoordinates={currentOfferCoordinates}/>
             </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {nearbyOffers.map((offer, i) => {
+                {nearbyOffers.map((offer) => {
                   return <CardOffer
                     offer={offer}
                     key={offer.id + offer.title}
-                    onOfferOver={offerHoverHandler}
+                    offerHoverHandler={offerHoverHandler}
                   />;
                 })}
               </div>
@@ -148,8 +169,7 @@ class DetailsOffer extends PureComponent {
         </main>
       </div>
     );
-  }
-}
+  };
 
 DetailsOffer.propTypes = {
   offer: PropTypes.object,
@@ -160,6 +180,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   offers: state.offers,
   reviews: state.reviews,
   isAuthorized: state.isAuthorized,
+  favorites: state.favorites,
 });
 
 const mapDispatchToProps = {

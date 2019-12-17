@@ -59,8 +59,8 @@ class SortingOffers extends React.PureComponent {
 SortingOffers.propTypes = {
   sortingName: PropTypes.string.isRequired,
   isOpenSorting: PropTypes.bool.isRequired,
-  toggleSortingClickHandler: PropTypes.func.isRequired,
-  sortingSelectionClickHandler: PropTypes.func.isRequired,
+  toggleSortingClickHandler: PropTypes.func,
+  sortingSelectionClickHandler: PropTypes.func,
 };
 
 export default SortingOffers;

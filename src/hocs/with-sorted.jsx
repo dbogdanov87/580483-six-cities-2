@@ -9,6 +9,7 @@ const withSorted = (Component) => {
         isOpenSorting: false,
       };
       this.toggleSortingClickHandler = this.toggleSortingClickHandler.bind(this);
+
     }
 
     toggleSortingClickHandler() {
@@ -23,7 +24,8 @@ const withSorted = (Component) => {
         <Component
           {...this.props}
           isOpenSorting={isOpenSorting}
-          toggleSorting={this.toggleSortingClickHandler}
+          toggleSortingClickHandler={this.toggleSortingClickHandler}
+
         />
       );
     }
@@ -36,4 +38,4 @@ withSorted.propTypes = {
   onSortByClick: PropTypes.func.isRequired,
 };
 
-export default WithSorted;
+export default withSorted;

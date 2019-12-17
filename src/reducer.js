@@ -10,6 +10,7 @@ export const getCityCoordinates = (cityName, offers) => {
 };
 
 export const sortingOffers = (filteredOffers, sortingBy) => {
+  //console.log(filteredOffers);
   switch (sortingBy) {
     case `Popular`: return filteredOffers;
     case `Price: low to high`:

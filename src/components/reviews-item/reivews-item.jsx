@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import {updateRating} from "../../utils/utils.js";
+
 const ReviewsItem = (props) => {
 
   const {review} = props;
@@ -18,7 +20,7 @@ const ReviewsItem = (props) => {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: review.rating}}/>
+            <span style={{width: updateRating(review.rating)}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

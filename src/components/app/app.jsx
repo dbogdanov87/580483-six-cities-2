@@ -8,7 +8,6 @@ import MainScreen from "../main-screen/main-screen.jsx";
 import DetailsOffer from "../details-offer/details-offer.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import FavoritesList from "../favorites-list/favorites-list.jsx";
-import withAuth from "../../hocs/with-auth.jsx";
 
 const App = (props) => {
   const {isAuthorized, offers} = props;

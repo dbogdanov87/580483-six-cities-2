@@ -13,7 +13,6 @@ class ListOffers extends PureComponent {
 
   render() {
     const {offers, offerHoverHandler} = this.props;
-    console.log(offers);
 
     return <div className="cities__places-list places__list tabs__content">
       {

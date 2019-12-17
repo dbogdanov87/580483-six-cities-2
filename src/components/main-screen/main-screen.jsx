@@ -10,6 +10,9 @@ import Header from "../header/header.jsx";
 import SortingOffers from "../sorting-offers/sorting-offers.jsx";
 import {MAX_COUNT_CITIES} from "../../constants.js";
 import Map from "../map/map.jsx";
+import withSorted from "../../hocs/with-sorted.jsx";
+
+const WithSorted= withSorted(SortingOffers);
 
 class MainScreen extends PureComponent {
   constructor(props) {
@@ -24,23 +27,19 @@ class MainScreen extends PureComponent {
     if (props.cityOffers.length === 0) {
       const cityOffers = getOffersByCity(props.offers, props.city);
       props.getCityOffers(cityOffers);
-      //props.setSortedOffers(props.offers, props.city)
     }
 
-    this.activeOfferCoordinates = getCityCoordinates(props.city, props.offers);
-    this.props.setActivePinCoordinates(this.activeOfferCoordinates);
-
-    this.toggleSortingClickHandler = this.toggleSortingClickHandler.bind(this);
+    //this.toggleSortingClickHandler = this.toggleSortingClickHandler.bind(this);
     this.sortingSelectionClickHandler = this.sortingSelectionClickHandler.bind(this);
     this.offerHoverHandler = this.offerHoverHandler.bind(this);
     //this.redirectToLoginHandler = this.redirectToLoginHandler(this);
   }
 
-  toggleSortingClickHandler() {
-    this.setState((oldState) => ({
-      isOpenSorting: !oldState.isOpenSorting
-    }));
-  }
+  // toggleSortingClickHandler() {
+  //   this.setState((oldState) => ({
+  //     isOpenSorting: !oldState.isOpenSorting
+  //   }));
+  // }
   //
   // redirectToLoginHandler() {
   //   this.props.history.push(`/login`);
@@ -58,10 +57,11 @@ class MainScreen extends PureComponent {
   }
 
   sortingSelectionClickHandler(sortingName) {
-    const {changeSortingName, cityOffers} = this.props;
+    const {changeSortingName, cityOffers, getCityOffers} = this.props;
     changeSortingName(sortingName);
-    sortingOffers(cityOffers, sortingName);
-    this.toggleSortingClickHandler();
+    let sorted = getOffersByCity(cityOffers, this.props.city);
+    sorted = sortingOffers(sorted, sortingName);
+    getCityOffers(sorted);
   }
 
   render() {
@@ -95,7 +95,7 @@ class MainScreen extends PureComponent {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{numberOffers} {offers.length === 1 ? `place` : `places`} to stay in {city}</b>
-                <SortingOffers
+                <WithSorted
                   sortingName={sortingName}
                   isOpenSorting={isOpenSorting}
                   toggleSortingClickHandler={this.toggleSortingClickHandler}
@@ -103,7 +103,7 @@ class MainScreen extends PureComponent {
                 />
                 {
                   numberOffers > 0
-                    ? <ListOffers offers={cityOffers} offerHoverHandler={this.offerHoverHandler} />
+                    ? <ListOffers offers={cityOffers} offerHoverHandler={this.offerHoverHandler} redirectToLogin={this.redirectToLoginHandler}/>
                     : <EmptyOffers city={city}/>
                 }
               </section>
