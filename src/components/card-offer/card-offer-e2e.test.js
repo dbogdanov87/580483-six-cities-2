@@ -9,13 +9,12 @@ describe(`Tests for card offer`, () => {
   it(`when you click on title, a callback will be called`, () => {
     const offers = [{
       id: 1,
-      cardImage: `img`,
+      preview_image: `img`,
       price: 25,
-      priceText: `night`,
-      bookmarkActive: true,
+      is_favorite: true,
       rating: `90%`,
-      cardName: `Beautiful`,
-      cardType: `privet`
+      title: `Beautiful`,
+      type: `privet`
     }];
     const onClickCardNameHandler = jest.fn();
 
@@ -34,13 +33,12 @@ describe(`Tests for card offer`, () => {
   it(`when you mouse enter on card, return correct information about card`, () => {
     const offers = [{
       id: 1,
-      cardImage: `img`,
+      preview_image: `img`,
       price: 25,
-      priceText: `night`,
-      bookmarkActive: true,
+      is_favorite: true,
       rating: `90%`,
-      cardName: `Beautiful`,
-      cardType: `privet`
+      title: `Beautiful`,
+      type: `privet`
     }];
     const onMouseEnterCardHandler = jest.fn();
 

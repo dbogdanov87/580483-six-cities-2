@@ -9,12 +9,11 @@ it(`Details Offer is rendered correctly`, () => {
   document.body.appendChild(div);
 
   const offers = [{
-    cardImage: `img`,
+    preview_image: `img`,
     cardGalleryImages: [`img/room.jpg`],
     cardMark: `Premium`,
     price: 250,
-    priceText: `night`,
-    bookmarkActive: true,
+    is_favorite: true,
     insideItems: [`Wi-Fi`],
     features:
       {
@@ -23,8 +22,8 @@ it(`Details Offer is rendered correctly`, () => {
         maxAdults: 4
       },
     rating: `90%`,
-    cardName: `Beautiful luxurious apartment at great location`,
-    cardType: `privet room`,
+    title: `Beautiful luxurious apartment at great location`,
+    type: `privet room`,
     description: `A quiet `,
     user: {
       userName: `Angelina`,
@@ -42,13 +41,12 @@ it(`Details Offer is rendered correctly`, () => {
   }];
   const nearbyOffers = [{
     id: 1,
-    cardImage: `img`,
+    preview_image: `img`,
     cardGalleryImages: [`img/room.jpg`],
     coordinates: [0, 0],
     cardMark: `Premium`,
     price: 250,
-    priceText: `night`,
-    bookmarkActive: true,
+    is_favorite: true,
     insideItems: [`Wi-Fi`],
     features:
       {
@@ -57,8 +55,8 @@ it(`Details Offer is rendered correctly`, () => {
         maxAdults: 4
       },
     rating: `90%`,
-    cardName: `Beautiful luxurious apartment at great location`,
-    cardType: `privet room`,
+    title: `Beautiful luxurious apartment at great location`,
+    type: `privet room`,
     description: `A quiet `,
     user: {
       userName: `Angelina`,

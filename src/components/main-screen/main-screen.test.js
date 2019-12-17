@@ -11,13 +11,12 @@ jest.mock(`../map/map.jsx`);
 it(`MainScreen is rendered correctly`, () => {
   const offers = [{
     id: 1,
-    cardImage: `img`,
+    preview_image: `img`,
     price: 25,
-    priceText: `night`,
-    bookmarkActive: true,
+    is_favorite: true,
     rating: `90%`,
-    cardName: `Beautiful`,
-    cardType: `privet`
+    title: `Beautiful`,
+    type: `privet`
   }];
   const store = createStore(reducer);
   const tree = renderer.create(

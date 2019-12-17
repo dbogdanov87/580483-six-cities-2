@@ -1,47 +1,66 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+
+import {MAX_NEAR_PLACES} from "../../constants.js";
+import {Operations, getOffersByCity} from "../../reducer.js";
+import Header from "../header/header.jsx";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
-import ListOffers from "../list-offers/list-offers.jsx";
+import ReviewsSendForm from "../reviews-send-form/reviews-send-form.jsx";
+import CardOffer from "../card-offer/card-offer.jsx";
+import withFormSubmit from "../../hocs/with-form-submit.jsx";
+import Map from "../map/map.jsx";
+import {updateRating} from "../../utils/utils.js";
+import {MAX_COUNT_REVIEWS} from "../../constants.js";
 
-class DetailsOffer extends PureComponent {
-  constructor(props) {
-    super(props);
+const DetailsOffer = (props) => {
+  const id = props.match.params.id;
+  const {city, offers} = props;
+  const offer = offers.find((item) => item.id === Number(id));
+  const avatarUrl = `../` + offer.host.avatar_url;
+  const nearbyOffers = getOffersByCity(offers, city).slice(0, MAX_NEAR_PLACES);
+  const currentOfferCoordinates = [offer.location.latitude, offer.location.longitude];
+
+  if (props.reviews.length === 0) {
+    props.loadReviews(id);
   }
+  let listReviews = props.reviews.slice(0, MAX_COUNT_REVIEWS).sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  render() {
-    const {
-      offer: {
-        cardGalleryImages,
-        cardMark,
-        cardName,
-        price,
-        priceText,
-        insideItems,
-        features: {
-          entire,
-          bedRooms,
-          maxAdults
-        },
-        rating,
-        description,
-        user: {
-          userName,
-          avatarImage,
-          userStatus
-        },
+  const offerHoverHandler = (offerItem) => {
+    return offerItem;
+  };
 
-      },
-      reviews,
-      nearbyOffers,
-    } = this.props;
+  let statusFavorites = props.favorites.find((item) => item.id === Number(id)) ? 1 : 0;
+  const bookmarkClickHandler = () => {
+    if (props.isAuthorized) {
+      if (statusFavorites === 1) {
+        statusFavorites = 0;
+        props.setFavorite(id, statusFavorites);
+      } else {
+        statusFavorites = 1;
+        props.setFavorite(id, statusFavorites);
+      }
+      props.loadFavorites();
+    } else {
+      props.history.push(`/login`);
+    }
+  };
 
-    return (
+  const CommentWrapped = withFormSubmit(ReviewsSendForm);
+
+  const submitHandler = (comment) => {
+    props.sendComment(props.match.params.id, comment);
+  };
+
+  return (
+    <div className="page">
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                cardGalleryImages.map((img, i) => (
+                offer.images.map((img, i) => (
                   <div className="property__image-wrapper" key={i}>
                     <img className="property__image" src={img} alt="Photo studio"/>
                   </div>))
@@ -50,47 +69,50 @@ class DetailsOffer extends PureComponent {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>{cardMark}</span>
-              </div>
+              {
+                offer.is_premium &&
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+              }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {cardName}
+                  {offer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={statusFavorites === 1 && props.isAuthorized ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`} type="button" onClick={bookmarkClickHandler}>
                   <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
+                    <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: rating}}></span>
+                  <span style={{width: updateRating(offer.rating)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{Math.round(offer.rating)}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {entire}
+                  {offer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {bedRooms}
+                  {offer.bedrooms}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {maxAdults}
+                  {offer.max_adults}
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{price}</b>
-                <span className="property__price-text">&nbsp;{priceText}</span>
+                <b className="property__price-value">&euro;{offer.price}</b>
+                <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    insideItems.map((item, i) => (
+                    offer.goods.map((item, i) => (
                       <li className="property__inside-item" key={item + i}>
                         {item}
                       </li>))
@@ -101,118 +123,85 @@ class DetailsOffer extends PureComponent {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={avatarImage} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                    {userName}
+                    {offer.host.name}
                   </span>
                   <span className="property__user-status">
-                    {userStatus}
+                    {offer.host.is_pro ? `Pro` : `Free`}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {description}
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {offer.host.description}
                   </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ReviewsList reviews={reviews}/>
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-                  </div>
-                </form>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{listReviews.length}</span></h2>
+                {<ReviewsList reviews={listReviews}/>}
+                {props.isAuthorized && <CommentWrapped submitClick={submitHandler}/>}
               </section>
             </div>
           </div>
           <section className="property__map map">
+            <Map offers={nearbyOffers}
+              activeCity={city}
+              activeOfferCoordinates={currentOfferCoordinates}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <ListOffers offers={nearbyOffers}/>
+              {nearbyOffers.map((nearOffer) => {
+                return <CardOffer
+                  offer={nearOffer}
+                  key={nearOffer.id + nearOffer.title}
+                  offerHoverHandler={offerHoverHandler}
+                />;
+              })}
             </div>
           </section>
         </div>
       </main>
-    );
-  }
-}
-
-DetailsOffer.propTypes = {
-  offer: PropTypes.shape({
-    cardImage: PropTypes.string.isRequired,
-    cardGalleryImages: PropTypes.arrayOf(PropTypes.string).isRequired,
-    cardMark: PropTypes.string.isRequired,
-    cardName: PropTypes.string.isRequired,
-    cardType: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    priceText: PropTypes.string.isRequired,
-    bookmarkActive: PropTypes.bool.isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    features: PropTypes.shape({
-      entire: PropTypes.string.isRequired,
-      bedRooms: PropTypes.number.isRequired,
-      maxAdults: PropTypes.number.isRequired
-    }),
-    rating: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    user: PropTypes.shape({
-      userName: PropTypes.string.isRequired,
-      avatarImage: PropTypes.string.isRequired,
-      userStatus: PropTypes.string.isRequired
-    })
-  }).isRequired,
-  nearbyOffers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    </div>
+  );
 };
 
-export default DetailsOffer;
+DetailsOffer.propTypes = {
+  offer: PropTypes.object,
+  id: PropTypes.number,
+  city: PropTypes.string,
+  offers: PropTypes.array,
+  reviews: PropTypes.array,
+  loadReviews: PropTypes.func,
+  favorites: PropTypes.array,
+  isAuthorized: PropTypes.bool,
+  setFavorite: PropTypes.func,
+  sendComment: PropTypes.func,
+  match: PropTypes.object,
+  history: PropTypes.object,
+  loadFavorites: PropTypes.func,
+};
+
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  city: state.city,
+  offers: state.offers,
+  reviews: state.reviews,
+  isAuthorized: state.isAuthorized,
+  favorites: state.favorites,
+});
+
+const mapDispatchToProps = {
+  setFavorite: (id, status) => Operations.setFavorite(id, status),
+  loadFavorites: Operations.loadFavorites,
+  loadReviews: (id) => Operations.loadReviews(id),
+  sendComment: (id, comment) => Operations.sendComment(id, comment)
+
+};
+
+export {DetailsOffer};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailsOffer);

@@ -1,39 +1,57 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {connect} from 'react-redux';
+
+import {Operations} from "../../reducer.js";
 import MainScreen from "../main-screen/main-screen.jsx";
 import DetailsOffer from "../details-offer/details-offer.jsx";
-
-const getPageScreen = (props) => {
-  const {offers, reviews, nearbyOffers} = props;
-  const offerId = location.pathname.slice(-1);
-  switch (location.pathname) {
-    case `/`:
-      return <MainScreen />;
-    case `/offer` + offerId:
-      const offerDetail = offers.find((offer) => {
-        return offer.id === parseInt(offerId, 10);
-      });
-      return <DetailsOffer
-        offer={offerDetail}
-        reviews={reviews}
-        nearbyOffers={nearbyOffers}
-      />;
-  }
-  return null;
-};
+import SignIn from "../sign-in/sign-in.jsx";
+import FavoritesList from "../favorites-list/favorites-list.jsx";
 
 const App = (props) => {
-  return <React.Fragment>{getPageScreen(props)}</React.Fragment>;
+  const {isAuthorized, offers} = props;
+
+  if (offers.length === 0) {
+    props.getListOffers();
+  }
+
+  return offers.length === 0 ? null : (
+    <Router history={history}>
+      <Switch>
+        <Route exact path={`/`} component={MainScreen} />
+        <Route exact path={`/login`} component={SignIn} />
+        <Route exact path={`/offer/:id`} component={DetailsOffer} />
+        <Route exact path={`/favorites`} component={isAuthorized ? FavoritesList : SignIn} />
+        <Route render={ () => <div style={
+          {
+            fontSize: `30px`,
+            position: `absolute`,
+            width: `100%`,
+            top: `50%`,
+            textAlign: `center`}}>`Ups... Page not found`</div>
+        }/>
+      </Switch>
+    </Router>
+  );
 };
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  offers: PropTypes.array.isRequired,
+  isAuthorized: PropTypes.bool,
+  getListOffers: PropTypes.func,
 };
 
-getPageScreen.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  nearbyOffers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  offers: state.offers,
+  city: state.city,
+  isAuthorized: state.isAuthorized,
+  getListOffers: state.getListOffers,
+});
+
+const mapDispatchToProps = {
+  getListOffers: Operations.getListOffers,
 };
 
-export default App;
+export {App};
+export default connect(mapStateToProps, mapDispatchToProps)(App);

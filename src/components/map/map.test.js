@@ -21,14 +21,13 @@ it(`Map is rendered correctly`, () => {
   };
   const offers = [{
     id: 1,
-    cardImage: `img`,
+    preview_image: `img`,
     coordinates: [52.3809553943508, 4.939309666406198],
     price: 25,
-    priceText: `night`,
-    bookmarkActive: true,
+    is_favorite: true,
     rating: `90%`,
-    cardName: `Beautiful`,
-    cardType: `privet`
+    title: `Beautiful`,
+    type: `privet`
   }];
   const tree = renderer.create(<Map
     activeCity={city}
