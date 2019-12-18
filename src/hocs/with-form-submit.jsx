@@ -21,12 +21,12 @@ const withFormSubmit = (Component) => {
       this.starRef = React.createRef();
       this.buttonRef = React.createRef();
 
-      this._starsChangeHandler = this._starsChangeHandler.bind(this);
-      this._submitHandler = this._submitHandler.bind(this);
-      this._textAreaChangeHandler = this._textAreaChangeHandler.bind(this);
+      this._starsChangeHandle = this._starsChangeHandle.bind(this);
+      this._submitHandle = this._submitHandle.bind(this);
+      this._textAreaChangeHandle = this._textAreaChangeHandle.bind(this);
     }
 
-    _starsChangeHandler(evt) {
+    _starsChangeHandle(evt) {
       if (evt.target.id !== 0) {
         this.setState({
           isStarsChosen: true,
@@ -39,7 +39,7 @@ const withFormSubmit = (Component) => {
       }
     }
 
-    _textAreaChangeHandler(evt) {
+    _textAreaChangeHandle(evt) {
       this.setState({textComment: evt.target.value});
       if (this.state.textComment.length >= MIN_LENGTH_COMMENT_REVIWS
         || this.state.textComment.length <= MAX_LENGTH_COMMENT_REVIEWS) {
@@ -70,7 +70,7 @@ const withFormSubmit = (Component) => {
       return null;
     }
 
-    _submitHandler(evt) {
+    _submitHandle(evt) {
       evt.preventDefault();
       this.formRef.current.disabled = true;
 
@@ -95,9 +95,9 @@ const withFormSubmit = (Component) => {
     render() {
       return <Component
         {...this.props}
-        submitHandler={this._submitHandler}
-        starsChangeHandler={this._starsChangeHandler}
-        changeHandler={this._textAreaChangeHandler}
+        submitHandler={this._submitHandle}
+        starsChangeHandler={this._starsChangeHandle}
+        changeHandler={this._textAreaChangeHandle}
         formRef={this.formRef}
         starsRef={this.starsRef}
         textRef={this.textRef}

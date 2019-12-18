@@ -8,11 +8,11 @@ const withSorted = (Component) => {
       this.state = {
         isOpenSorting: false,
       };
-      this.toggleSortingClickHandler = this.toggleSortingClickHandler.bind(this);
+      this.toggleSortingClickHandle = this.toggleSortingClickHandle.bind(this);
 
     }
 
-    toggleSortingClickHandler() {
+    toggleSortingClickHandle() {
       const {isOpenSorting} = this.state;
       this.setState({isOpenSorting: !isOpenSorting});
     }
@@ -24,7 +24,7 @@ const withSorted = (Component) => {
         <Component
           {...this.props}
           isOpenSorting={isOpenSorting}
-          toggleSortingClickHandler={this.toggleSortingClickHandler}
+          toggleSortingClickHandler={this.toggleSortingClickHandle}
 
         />
       );

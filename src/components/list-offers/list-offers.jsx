@@ -7,7 +7,7 @@ class ListOffers extends PureComponent {
     super(props);
   }
 
-  onClickCardNameHandler(id) {
+  onClickCardNameHandle(id) {
     location.pathname = `/offer` + id;
   }
 
@@ -19,7 +19,7 @@ class ListOffers extends PureComponent {
         offers.map((offer) => <CardOffer
           key={offer.id}
           offer={offer}
-          onClickCardName={this.onClickCardNameHandler}
+          onClickCardName={this.onClickCardNameHandle}
           onOfferHoverHandler={onOfferHoverHandler}
         />
         )

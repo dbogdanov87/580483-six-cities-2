@@ -25,8 +25,8 @@ class MainScreen extends PureComponent {
       props.getCityOffers(cityOffers);
     }
 
-    this.sortingSelectionClickHandler = this.sortingSelectionClickHandler.bind(this);
-    this.offerHoverHandler = this.offerHoverHandler.bind(this);
+    this.sortingSelectionClickHandle = this.sortingSelectionClickHandle.bind(this);
+    this.offerHoverHandle = this.offerHoverHandle.bind(this);
   }
 
   getAllCities(offers) {
@@ -34,13 +34,13 @@ class MainScreen extends PureComponent {
     return Array.from(uniqueCities).slice(0, MAX_COUNT_CITIES);
   }
 
-  offerHoverHandler(id) {
+  offerHoverHandle(id) {
     const activeOffer = this.props.offers.find((item) => item.id === id);
     const coordinates = [activeOffer.location.latitude, activeOffer.location.longitude];
     this.props.setActivePinCoordinates(coordinates);
   }
 
-  sortingSelectionClickHandler(sortingName) {
+  sortingSelectionClickHandle(sortingName) {
     const {changeSortingName, cityOffers, getCityOffers} = this.props;
     changeSortingName(sortingName);
     let sorted = getOffersByCity(cityOffers, this.props.city);
@@ -79,12 +79,11 @@ class MainScreen extends PureComponent {
                 <b className="places__found">{numberOffers} {offers.length === 1 ? `place` : `places`} to stay in {city}</b>
                 <WithSorted
                   sortingName={sortingName}
-                  toggleSortingClickHandler={this.toggleSortingClickHandler}
-                  sortingSelectionClickHandler={this.sortingSelectionClickHandler}
+                  sortingSelectionClickHandler={this.sortingSelectionClickHandle}
                 />
                 {
                   numberOffers > 0
-                    ? <ListOffers offers={cityOffers} onOfferHoverHandler={this.offerHoverHandler} redirectToLogin={this.redirectToLoginHandler}/>
+                    ? <ListOffers offers={cityOffers} onOfferHoverHandler={this.offerHoverHandle} redirectToLogin={this.redirectToLoginHandle}/>
                     : <EmptyOffers city={city}/>
                 }
               </section>

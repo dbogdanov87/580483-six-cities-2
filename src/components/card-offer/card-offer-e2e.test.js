@@ -16,11 +16,11 @@ describe(`Tests for card offer`, () => {
       title: `Beautiful`,
       type: `privet`
     }];
-    const onClickCardNameHandler = jest.fn();
+    const onClickCardNameHandle = jest.fn();
 
     const cardOffer = shallow(<CardOffer
       offer = {offers[0]}
-      onClickCardName={onClickCardNameHandler}
+      onClickCardName={onClickCardNameHandle}
       onMouseEnterCard={()=> {}}
       onMouseOutCard={()=> {}}
     />);
@@ -28,7 +28,7 @@ describe(`Tests for card offer`, () => {
     const cardName = cardOffer.find(`.place-card__name a`);
     cardName.simulate(`click`);
 
-    expect(onClickCardNameHandler).toHaveBeenCalledTimes(1);
+    expect(onClickCardNameHandle).toHaveBeenCalledTimes(1);
   });
   it(`when you mouse enter on card, return correct information about card`, () => {
     const offers = [{
@@ -40,12 +40,12 @@ describe(`Tests for card offer`, () => {
       title: `Beautiful`,
       type: `privet`
     }];
-    const onMouseEnterCardHandler = jest.fn();
+    const onMouseEnterCardHandle = jest.fn();
 
     const cardOffer = shallow(<CardOffer
       offer={offers[0]}
       onClickCardName={()=> {}}
-      onMouseEnterCard={onMouseEnterCardHandler}
+      onMouseEnterCard={onMouseEnterCardHandle}
       onMouseOutCard={()=> {}}
     />);
 
