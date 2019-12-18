@@ -24,7 +24,7 @@ it(`Map is rendered correctly`, () => {
     previewImage: `img`,
     coordinates: [52.3809553943508, 4.939309666406198],
     price: 25,
-    is_favorite: true,
+    isFavorite: true,
     rating: `90%`,
     title: `Beautiful`,
     type: `privet`

@@ -95,7 +95,7 @@ export const convertOfferToCamelCase = ({
   price,
   goods,
   host: {
-    id: host.id,
+    id: id,
     isPro: host.is_pro,
     name: host.name,
     avatarUrl: host.avatar_url,
@@ -127,11 +127,11 @@ export const convertCommentsToCamelCase = (comments) => {
 };
 
 export const convertUserToCamelCase = ({
-    avatar_url: avatarUrl,
-    email,
-    id,
-    is_pro: isPro,
-    name,
+  avatar_url: avatarUrl,
+  email,
+  id,
+  is_pro: isPro,
+  name,
  }) => ({
   avatarUrl,
   email,

@@ -12,7 +12,7 @@ it(`CardOffer is rendered correctly`, () => {
     id: 1,
     previewImage: `img`,
     price: 25,
-    is_favorite: true,
+    isFavorite: true,
     rating: `90%`,
     title: `Beautiful`,
     type: `privet`

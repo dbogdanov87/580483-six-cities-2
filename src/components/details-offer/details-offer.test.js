@@ -13,7 +13,7 @@ it(`Details Offer is rendered correctly`, () => {
     cardGalleryImages: [`img/room.jpg`],
     cardMark: `Premium`,
     price: 250,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`],
     features:
       {
@@ -46,7 +46,7 @@ it(`Details Offer is rendered correctly`, () => {
     coordinates: [0, 0],
     cardMark: `Premium`,
     price: 250,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`],
     features:
       {

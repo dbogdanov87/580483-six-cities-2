@@ -10,7 +10,7 @@ const offers = [
     cardMark: `Premium`,
     coordinates: [52.3909553943508, 4.85309666406198],
     price: 250,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
     features:
       {
@@ -39,7 +39,7 @@ const offers = [
     cardMark: `Not premium`,
     coordinates: [52.369553943508, 4.85309666406198],
     price: 70,
-    is_favorite: false,
+    isFavorite: false,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Dishwasher`, `Cabel TV`, `Fridge`],
     features:
       {
@@ -69,7 +69,7 @@ const offers = [
     cardMark: `Not premium`,
     coordinates: [52.3909553943508, 4.929309666406198],
     price: 65,
-    is_favorite: false,
+    isFavorite: false,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`],
     features:
       {
@@ -99,7 +99,7 @@ const offers = [
     cardMark: `Premium`,
     coordinates: [52.3809553943508, 4.939309666406198],
     price: 150,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`],
     features: {
       entire: `Entire place`,
@@ -127,7 +127,7 @@ const offers = [
     cardMark: `Premium`,
     coordinates: [52.3909553943508, 4.85309666406198],
     price: 250,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
     features:
       {
@@ -157,7 +157,7 @@ const offers = [
     cardMark: `Not premium`,
     coordinates: [52.369553943508, 4.85309666406198],
     price: 70,
-    is_favorite: false,
+    isFavorite: false,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Dishwasher`, `Cabel TV`, `Fridge`],
     features:
       {
@@ -187,7 +187,7 @@ const offers = [
     cardMark: `Not premium`,
     coordinates: [48.8744200, 2.34201000],
     price: 65,
-    is_favorite: false,
+    isFavorite: false,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`],
     features:
       {
@@ -217,7 +217,7 @@ const offers = [
     cardMark: `Premium`,
     coordinates: [48.8644200, 2.34901000],
     price: 150,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`],
     features: {
       entire: `Entire place`,
@@ -245,7 +245,7 @@ const offers = [
     cardMark: `Premium`,
     coordinates: [48.8534100, 2.3488000],
     price: 250,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
     features:
       {
@@ -275,7 +275,7 @@ const offers = [
     cardMark: `Not premium`,
     coordinates: [52.369553943508, 4.85309666406198],
     price: 70,
-    is_favorite: false,
+    isFavorite: false,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Dishwasher`, `Cabel TV`, `Fridge`],
     features:
       {
@@ -305,7 +305,7 @@ const offers = [
     cardMark: `Not premium`,
     coordinates: [52.3909553943508, 4.929309666406198],
     price: 65,
-    is_favorite: false,
+    isFavorite: false,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`],
     features:
       {
@@ -335,7 +335,7 @@ const offers = [
     cardMark: `Premium`,
     coordinates: [52.3809553943508, 4.939309666406198],
     price: 150,
-    is_favorite: true,
+    isFavorite: true,
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`],
     features: {
       entire: `Entire place`,

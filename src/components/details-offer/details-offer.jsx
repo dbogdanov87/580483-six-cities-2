@@ -17,7 +17,7 @@ const DetailsOffer = (props) => {
   const id = props.match.params.id;
   const {city, offers} = props;
   const offer = offers.find((item) => item.id === Number(id));
-  const avatarUrl = `../` + offer.host.avatar_url;
+  const avatarUrl = `../` + offer.host.avatarUrl;
   const cityOffers = getOffersByCity(offers, city);
   const nearbyOffers = getNearOffers(cityOffers, Number(id));
   const currentOfferCoordinates = [offer.location.latitude, offer.location.longitude];
@@ -76,7 +76,7 @@ const DetailsOffer = (props) => {
           <div className="property__container container">
             <div className="property__wrapper">
               {
-                offer.is_premium &&
+                offer.isPremium &&
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>
@@ -107,7 +107,7 @@ const DetailsOffer = (props) => {
                   {offer.bedrooms}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {offer.max_adults}
+                  {offer.maxAdults}
                 </li>
               </ul>
               <div className="property__price">
@@ -135,7 +135,7 @@ const DetailsOffer = (props) => {
                     {offer.host.name}
                   </span>
                   <span className="property__user-status">
-                    {offer.host.is_pro ? `Pro` : `Free`}
+                    {offer.host.isPro ? `Pro` : `Free`}
                   </span>
                 </div>
                 <div className="property__description">
@@ -184,21 +184,21 @@ DetailsOffer.propTypes = {
     id: PropTypes.number.isRequired,
     previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    is_favorite: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     rating: PropTypes.number.isRequired,
-    is_premium: PropTypes.bool,
+    isPremium: PropTypes.bool,
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     images: PropTypes.arrayOf(PropTypes.string).isRequired,
     bedrooms: PropTypes.number.isRequired,
-    max_adults: PropTypes.number.isRequired,
+    maxAdults: PropTypes.number.isRequired,
     goods: PropTypes.arrayOf(PropTypes.string).isRequired,
     description: PropTypes.string.isRequired,
     host: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      is_pro: PropTypes.bool.isRequired,
+      isPro: PropTypes.bool.isRequired,
       name: PropTypes.string.isRequired,
-      avatar_url: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
     }),
   })).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({})),

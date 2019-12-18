@@ -161,7 +161,7 @@ export const Operations = {
   loadFavorites: () => (dispatch, state, api) => {
     return api.get(`/favorite`)
       .then((response) => {
-        dispatch(ActionCreator.getFavorites(convertOfferToCamelCase(response.data)));
+        dispatch(ActionCreator.getFavorites(convertOffersToCamelCase(response.data)));
       });
   },
 

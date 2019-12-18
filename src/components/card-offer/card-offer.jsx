@@ -12,7 +12,7 @@ const CardOffer = (props) => {
       id,
       previewImage,
       price,
-      is_premium,
+      isPremium,
       rating,
       title,
       type
@@ -54,7 +54,7 @@ const CardOffer = (props) => {
         }
       }>
       {
-        is_premium &&
+        isPremium &&
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
@@ -98,9 +98,9 @@ CardOffer.propTypes = {
     id: PropTypes.number.isRequired,
     previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    is_favorite: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     rating: PropTypes.number.isRequired,
-    is_premium: PropTypes.bool,
+    isPremium: PropTypes.bool,
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,

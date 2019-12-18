@@ -33,7 +33,8 @@ const withFormSubmit = (Component) => {
           stars: this._getRating(evt.target.id)
         });
 
-        if (this.textRef.current.content) {
+        if (this.setState.isTextCorrect) {
+          console.log(111);
           this.buttonRef.current.disabled = false;
         }
       }
@@ -44,7 +45,6 @@ const withFormSubmit = (Component) => {
       if (this.state.textComment.length >= MIN_LENGTH_COMMENT_REVIEWS
         || this.state.textComment.length <= MAX_LENGTH_COMMENT_REVIEWS) {
         this.setState.isTextCorrect = true;
-
         if (this.state.isStarsChosen) {
           this.buttonRef.current.disabled = false;
         }
