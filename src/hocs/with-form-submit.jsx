@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {MIN_LENGTH_COMMENT_REVIWS, MAX_LENGTH_COMMENT_REVIEWS} from "../constants.js";
+import {MIN_LENGTH_COMMENT_REVIEWS, MAX_LENGTH_COMMENT_REVIEWS} from "../constants.js";
 
 const withFormSubmit = (Component) => {
   class WithFormSubmit extends React.PureComponent {
@@ -41,7 +41,7 @@ const withFormSubmit = (Component) => {
 
     _handleChangeTextArea(evt) {
       this.setState({textComment: evt.target.value});
-      if (this.state.textComment.length >= MIN_LENGTH_COMMENT_REVIWS
+      if (this.state.textComment.length >= MIN_LENGTH_COMMENT_REVIEWS
         || this.state.textComment.length <= MAX_LENGTH_COMMENT_REVIEWS) {
         this.setState.isTextCorrect = true;
 
@@ -50,7 +50,7 @@ const withFormSubmit = (Component) => {
         }
       }
       if (this.state.textComment.length >= MAX_LENGTH_COMMENT_REVIEWS
-        || this.state.textComment.length <= MIN_LENGTH_COMMENT_REVIWS) {
+        || this.state.textComment.length <= MIN_LENGTH_COMMENT_REVIEWS) {
         this.buttonRef.current.disabled = true;
       }
     }

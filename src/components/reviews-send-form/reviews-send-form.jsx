@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
-import {MIN_LENGTH_COMMENT_REVIWS} from "../../constants.js";
+import {MIN_LENGTH_COMMENT_REVIEWS} from "../../constants.js";
 
 class ReviewsSendForm extends PureComponent {
   constructor(props) {
@@ -60,7 +60,7 @@ class ReviewsSendForm extends PureComponent {
         <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={this.onChangeTextArea} ref={this.textRef}/>
         <div className="reviews__button-wrapper">
           <p className="reviews__help">
-            To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_LENGTH_COMMENT_REVIWS} characters</b>.
+            To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_LENGTH_COMMENT_REVIEWS} characters</b>.
           </p>
           <button className="reviews__submit form__submit button" type="submit" ref={this.buttonRef} disabled>Submit</button>
         </div>

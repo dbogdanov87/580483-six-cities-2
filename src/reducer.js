@@ -1,4 +1,4 @@
-import {SORTED_OPTIONS, DEFAULT_CITY} from "../src/constants.js";
+import {SORTED_OPTIONS, DEFAULT_CITY, ACTION_TYPES} from "../src/constants.js";
 
 export const getOffersByCity = (offers, cityName) => {
   return offers.filter((offer) => offer.city.name === cityName);
@@ -37,50 +37,50 @@ const initialState = {
 
 export const ActionCreator = {
   changeCity: (city) => ({
-    type: `CHANGE_CITY`,
+    type: ACTION_TYPES.CHANGE_CITY,
     payload: city
   }),
   getListOffers: (offers) => {
     return {
-      type: `GET_LIST_OFFERS`,
+      type: ACTION_TYPES.GET_LIST_OFFERS,
       payload: offers
     };
   },
   changeSortingName: (sortingName) => {
     return {
-      type: `SORTING_OFFERS_BY_NAME`,
+      type: ACTION_TYPES.SORTING_OFFERS_BY_NAME,
       payload: sortingName,
     };
   },
 
   getCityOffers: (offers) => ({
-    type: `GET_CITY_OFFERS`,
+    type: ACTION_TYPES.GET_CITY_OFFERS,
     payload: offers
   }),
 
   getFavorites: (favorites) => ({
-    type: `GET_FAVORITES`,
+    type: ACTION_TYPES.GET_FAVORITES,
     payload: favorites
   }),
 
   getReviews: (review) =>({
-    type: `GET_REVIEWS`,
+    type: ACTION_TYPES.GET_REVIEWS,
     payload: review
   }),
 
   setActivePinCoordinates: (coordinates) => ({
-    type: `SET_ACTIVE_PIN`,
+    type: ACTION_TYPES.SET_ACTIVE_PIN,
     payload: coordinates
   }),
 
   setUserData: (userData) => ({
-    type: `SET_USER_DATA`,
+    type: ACTION_TYPES.SET_USER_DATA,
     payload: userData
   }),
 
   isAuthorized: (flag) => {
     return {
-      type: `USER_AUTHORIZE`,
+      type: ACTION_TYPES.USER_AUTHORIZE,
       payload: flag
     };
   }
@@ -88,44 +88,44 @@ export const ActionCreator = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case `CHANGE_CITY`:
+    case ACTION_TYPES.CHANGE_CITY:
       return Object.assign({}, state, {
         city: action.payload,
       });
-    case `GET_LIST_OFFERS`:
+    case ACTION_TYPES.GET_LIST_OFFERS:
       return Object.assign({}, state, {
         offers: action.payload,
       });
-    case `GET_CITY_OFFERS`:
+    case ACTION_TYPES.GET_CITY_OFFERS:
       return Object.assign({}, state, {
         cityOffers: action.payload,
       });
 
-    case `GET_FAVORITES`:
+    case ACTION_TYPES.GET_FAVORITES:
       return Object.assign({}, state, {
         favorites: action.payload,
       });
 
-    case `GET_REVIEWS`:
+    case ACTION_TYPES.GET_REVIEWS:
       return Object.assign({}, state, {
         reviews: action.payload,
       });
 
-    case `SORTING_OFFERS_BY_NAME`:
+    case ACTION_TYPES.SORTING_OFFERS_BY_NAME:
       return Object.assign({}, state, {
         sortingName: action.payload,
       });
 
-    case `SET_USER_DATA`:
+    case ACTION_TYPES.SET_USER_DATA:
       return Object.assign({}, state, {
         userData: action.payload,
       });
 
-    case `USER_AUTHORIZE`: return Object.assign({}, state, {
+    case ACTION_TYPES.USER_AUTHORIZE: return Object.assign({}, state, {
       isAuthorized: action.payload
     });
 
-    case `SET_ACTIVE_PIN`: return Object.assign({}, state, {
+    case ACTION_TYPES.SET_ACTIVE_PIN: return Object.assign({}, state, {
       activeOfferCoordinates: action.payload
     });
   }
@@ -158,7 +158,6 @@ export const Operations = {
     return api.get(`/comments/` + id)
       .then((response) => {
         dispatch(ActionCreator.getReviews(response.data));
-        console.log(response.data);
       });
   },
 
