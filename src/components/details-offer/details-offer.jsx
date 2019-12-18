@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {MAX_NEAR_PLACES} from "../../constants.js";
 import {Operations, getOffersByCity} from "../../reducer.js";
 import Header from "../header/header.jsx";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
@@ -12,13 +11,15 @@ import withFormSubmit from "../../hocs/with-form-submit.jsx";
 import Map from "../map/map.jsx";
 import {updateRating} from "../../utils/utils.js";
 import {MAX_COUNT_REVIEWS} from "../../constants.js";
+import {getNearOffers} from "../../utils/utils.js";
 
 const DetailsOffer = (props) => {
   const id = props.match.params.id;
   const {city, offers} = props;
   const offer = offers.find((item) => item.id === Number(id));
   const avatarUrl = `../` + offer.host.avatar_url;
-  const nearbyOffers = getOffersByCity(offers, city).slice(0, MAX_NEAR_PLACES);
+  const cityOffers = getOffersByCity(offers, city);
+  const nearbyOffers = getNearOffers(cityOffers, Number(id));
   const currentOfferCoordinates = [offer.location.latitude, offer.location.longitude];
   let listReviews = [];
 

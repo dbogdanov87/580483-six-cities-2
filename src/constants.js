@@ -10,7 +10,7 @@ export const ACTION_TYPES = {
   USER_AUTHORIZE: `USER_AUTHORIZE`,
 };
 
-export const MAX_NEAR_PLACES = 3;
+export const MAX_NEAR_PLACES = 2;
 export const MIN_LENGTH_COMMENT_REVIEWS = 50;
 export const MAX_LENGTH_COMMENT_REVIEWS = 300;
 export const MAX_COUNT_REVIEWS = 10;
