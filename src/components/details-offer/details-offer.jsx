@@ -139,7 +139,7 @@ const DetailsOffer = (props) => {
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {offer.host.description}
+                    {offer.description}
                   </p>
                 </div>
               </div>
@@ -188,10 +188,21 @@ DetailsOffer.propTypes = {
     is_premium: PropTypes.bool,
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    max_adults: PropTypes.number.isRequired,
+    goods: PropTypes.arrayOf(PropTypes.string).isRequired,
+    description: PropTypes.string.isRequired,
+    host: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      is_pro: PropTypes.bool.isRequired,
+      name: PropTypes.string.isRequired,
+      avatar_url: PropTypes.string.isRequired,
+    }),
   })).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({})),
   loadReviews: PropTypes.func,
-  favorites: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.shape({})),
   isAuthorized: PropTypes.bool,
   setFavorite: PropTypes.func,
   sendComment: PropTypes.func,
