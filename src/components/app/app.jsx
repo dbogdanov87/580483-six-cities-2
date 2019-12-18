@@ -37,7 +37,16 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  offers: PropTypes.array.isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    preview_image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    is_favorite: PropTypes.bool.isRequired,
+    rating: PropTypes.number.isRequired,
+    is_premium: PropTypes.bool,
+    title: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  })).isRequired,
   city: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool,
   getListOffers: PropTypes.func,
