@@ -34,7 +34,6 @@ const withFormSubmit = (Component) => {
         });
 
         if (this.setState.isTextCorrect) {
-          console.log(111);
           this.buttonRef.current.disabled = false;
         }
       }

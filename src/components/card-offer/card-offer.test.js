@@ -1,29 +1,24 @@
 import React from "react";
-import renderer from "react-test-renderer";
-import CardOffer from "./card-offer.jsx";
+import renderer from 'react-test-renderer';
+import {offers} from '../../mocks/offers.js';
+import {reviews} from '../../mocks/reviews.js';
+import CardOffer from '../card-offer/card-offer.jsx';
 
-it(`CardOffer is rendered correctly`, () => {
+jest.mock(`react-router-dom`, () => ({
+  Link: () => null
+}));
 
-  const div = document.createElement(`div`);
-  div.id = `map`;
-  document.body.appendChild(div);
+it(`CardOffer are displayed correctly`, () => {
 
-  const offers = [{
-    id: 1,
-    previewImage: `img`,
-    price: 25,
-    isFavorite: true,
-    rating: `90%`,
-    title: `Beautiful`,
-    type: `privet`
-  }];
-  const tree = renderer.create(<CardOffer
-    offer={offers[0]}
-    onClickCardName={()=> {}}
-    onMouseEnterCard={()=> {}}
-    onMouseOutCard={()=> {}}
-  />
-  ).toJSON();
-
-  expect(tree).toMatchSnapshot();
+  const card = renderer.create(
+      <CardOffer
+        offers={offers[0]}
+        reviews={reviews}
+        user={null}
+        onOfferHover={-1}
+        isPremium={false}
+        favorites={offers}
+      />)
+      .toJSON();
+  expect(card).toMatchSnapshot();
 });

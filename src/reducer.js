@@ -1,8 +1,7 @@
 import {SORTED_OPTIONS, DEFAULT_CITY, ACTION_TYPES} from "../src/constants.js";
 import {convertCommentsToCamelCase,
   convertUserToCamelCase,
-  convertOfferToCamelCase,
-  convertOffersToCamelCase} from "./utils/utils.js"
+  convertOffersToCamelCase} from "./utils/utils.js";
 
 export const getOffersByCity = (offers, cityName) => {
   return offers.filter((offer) => offer.city.name === cityName);
@@ -26,7 +25,7 @@ export const sortingOffers = (filteredOffers, sortingBy) => {
   return filteredOffers;
 };
 
-const initialState = {
+export const initialState = {
   offers: [],
   cityOffers: [],
   city: DEFAULT_CITY,
@@ -187,7 +186,7 @@ export const Operations = {
       }).then(dispatch(ActionCreator.isAuthorized(true)));
   },
 
-  setAuthorizationFlag: (flag) => (dispatch, ) => {
+  setAuthorizationFlag: (flag) => (dispatch) => {
     dispatch(ActionCreator.isAuthorized(flag));
   },
 };

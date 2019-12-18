@@ -39,7 +39,7 @@ export const convertOffersToCamelCase = (offers) => {
     description,
     location,
     id,
-    }) => ({
+  }) => ({
     city,
     previewImage,
     images,
@@ -64,47 +64,6 @@ export const convertOffersToCamelCase = (offers) => {
   }));
 };
 
-export const convertOfferToCamelCase = ({
-  city,
-  preview_image: previewImage,
-  images,
-  title,
-  is_favorite: isFavorite,
-  is_premium: isPremium,
-  rating,
-  type,
-  bedrooms,
-  max_adults: maxAdults,
-  price,
-  goods,
-  host,
-  description,
-  location,
-  id,
-  }) => ({
-  city,
-  previewImage,
-  images,
-  title,
-  isFavorite,
-  isPremium,
-  rating,
-  type,
-  bedrooms,
-  maxAdults,
-  price,
-  goods,
-  host: {
-    id: id,
-    isPro: host.is_pro,
-    name: host.name,
-    avatarUrl: host.avatar_url,
-  },
-  description,
-  location,
-  id,
-});
-
 export const convertCommentsToCamelCase = (comments) => {
   return comments.map(({
     comment,
@@ -112,7 +71,7 @@ export const convertCommentsToCamelCase = (comments) => {
     id,
     rating,
     user,
- }) => ({
+  }) => ({
     comment,
     date,
     id,
@@ -122,7 +81,7 @@ export const convertCommentsToCamelCase = (comments) => {
       id: user.id,
       isPro: user.is_pro,
       name: user.name,
-},
+    },
   }));
 };
 
@@ -132,7 +91,7 @@ export const convertUserToCamelCase = ({
   id,
   is_pro: isPro,
   name,
- }) => ({
+}) => ({
   avatarUrl,
   email,
   id,

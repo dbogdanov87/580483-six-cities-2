@@ -40,18 +40,18 @@ describe(`Tests for card offer`, () => {
       title: `Beautiful`,
       type: `privet`
     }];
-    const onMouseEnterCardHandle = jest.fn();
+    const onOfferHover = jest.fn();
 
     const cardOffer = shallow(<CardOffer
       offer={offers[0]}
       onClickCardName={()=> {}}
-      onMouseEnterCard={onMouseEnterCardHandle}
+      onMouseEnterCard={onOfferHover}
       onMouseOutCard={()=> {}}
     />);
 
     const offer = cardOffer.find(`.place-card`);
     offer.simulate(`mouseenter`);
 
-    expect(onMouseEnterCardHandler).toHaveBeenCalledTimes(1);
+    expect(onOfferHover).toHaveBeenCalledTimes(1);
   });
 });

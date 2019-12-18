@@ -16,7 +16,8 @@ it(`App is rendered correctly`, () => {
     isFavorite: true,
     rating: `90%`,
     title: `Beautiful`,
-    type: `privet`
+    type: `privet`,
+    getListOffers: jest.fn()
   }];
   const store = createStore(reducer);
   const tree = renderer.create(
