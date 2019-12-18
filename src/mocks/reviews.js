@@ -3,9 +3,9 @@ export const reviews = [
     id: 1,
     user: {
       'id': 4,
-      'is_pro': false,
+      'isPro': false,
       'name': `Max`,
-      'avatar_url': `img/1.png`
+      'avatarUrl': `img/1.png`
     },
     rating: 4,
     comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,

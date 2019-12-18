@@ -19,19 +19,19 @@ export const DEFAULT_CITY = `Amsterdam`;
 
 export const SORTED_OPTIONS = [
   {
-    id: 1,
-    name: `Popular`,
+    ID: 1,
+    NAME: `Popular`,
   },
   {
-    id: 2,
-    name: `Price: low to high`,
+    ID: 2,
+    NAME: `Price: low to high`,
   },
   {
-    id: 3,
-    name: `Price: high to low`,
+    ID: 3,
+    NAME: `Price: high to low`,
   },
   {
-    id: 4,
-    name: `Top rated first`,
+    ID: 4,
+    NAME: `Top rated first`,
   },
 ];

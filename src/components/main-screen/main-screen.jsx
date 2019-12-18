@@ -27,11 +27,16 @@ class MainScreen extends PureComponent {
 
     this.handleClickSortingSelection = this.handleClickSortingSelection.bind(this);
     this.handleOfferHover = this.handleOfferHover.bind(this);
+    this.handleClickBookmark = this.handleClickBookmark.bind(this);
   }
 
   getAllCities(offers) {
     const uniqueCities = offers.reduce((acc, elem) => acc.add(elem.city.name), new Set());
     return Array.from(uniqueCities).slice(0, MAX_COUNT_CITIES);
+  }
+
+  handleClickBookmark() {
+    this.props.history.push(`/login`);
   }
 
   handleOfferHover(id) {
@@ -83,7 +88,7 @@ class MainScreen extends PureComponent {
                 />
                 {
                   numberOffers > 0
-                    ? <ListOffers offers={cityOffers} onOfferHover={this.handleOfferHover} />
+                    ? <ListOffers offers={cityOffers} onOfferHover={this.handleOfferHover} onClickBookmark={this.handleClickBookmark}/>
                     : <EmptyOffers city={city}/>
                 }
               </section>
@@ -110,6 +115,7 @@ MainScreen.propTypes = {
   cityOffers: PropTypes.array,
   setActivePinCoordinates: PropTypes.func,
   activeOfferCoordinates: PropTypes.array,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {

@@ -3,7 +3,7 @@ import {reducer, initialState, ActionCreator} from './reducer.js';
 import {offers} from '../src/mocks/offers.js';
 import {reviews} from '../src/mocks/reviews.js';
 import MockAdapter from 'axios-mock-adapter';
-import createAPI from './api.js';
+import {createAPI} from './api.js';
 import {Operations} from './reducer';
 import {ACTION_TYPES} from './constants.js';
 
@@ -18,6 +18,13 @@ describe(`Action creators work correctly`, () => {
     expect(ActionCreator.changeCity(`Moscow`)).toEqual({
       type: ACTION_TYPES.CHANGE_CITY,
       payload: `Moscow`,
+    });
+  });
+
+  it(`ChangeSorting returns new sorting`, () => {
+    expect(ActionCreator.changeSortingName(`Sorting`)).toEqual({
+      type: ACTION_TYPES.SORTING_OFFERS_BY_NAME,
+      payload: `Sorting`,
     });
   });
 
@@ -83,19 +90,14 @@ describe(`Reducer works correctly`, () => {
 
   it(`Reducer should replace city by a given value`, () => {
     expect(reducer({
-      currentCity: `Amsterdam`,
-      currentCoordinates: [1, 1],
-      currentOffers: [{city: `Amsterdam`, currentCoordinates: [1, 1]}],
+      city: `Amsterdam`,
     }, {
       type: ACTION_TYPES.CHANGE_CITY,
       payload: `Moscow`,
     })).toEqual({
-      currentCity: `Moscow`,
-      currentCoordinates: [1, 1],
-      currentOffers: [{city: `Amsterdam`, currentCoordinates: [1, 1]}]
+      city: `Moscow`,
     });
   });
-
 
   const onError = jest.fn();
   const api = createAPI(onError);
@@ -106,8 +108,8 @@ describe(`Reducer works correctly`, () => {
     const dispatch = jest.fn();
 
     apiMock
-      .onGet(`./hotels`)
-      .reply(200, [{city: {name: `Am`}}]);
+      .onGet(`/hotels`)
+      .reply(200, [{city: {name: `Amsterdam`}}]);
 
     return loadOffers(dispatch, null, api)
       .then(() => {
@@ -137,15 +139,15 @@ describe(`Reducer works correctly`, () => {
 
   it(`Should make a correct POST to /login`, () => {
     const dispatch = jest.fn();
-    const userData = {
-      email: `test@test.com`,
+    const userParams = {
+      email: `test@test.co`,
       password: `111`
     };
-    const sendUserData = Operations.setUserData(userData, jest.fn());
+    const sendUserData = Operations.setUserData(userParams, jest.fn());
 
     apiMock
-      .onPost(`/login`, userData)
-      .reply(200, {name: `test`, avatarUrl: ``, isPro: true, email: `test@test.com`});
+      .onPost(`/login`, userParams)
+      .reply(200, {name: `test`, avatarUrl: ``, isPro: true, email: `test@test.co`});
 
     return sendUserData(dispatch, null, api)
       .then(() => {

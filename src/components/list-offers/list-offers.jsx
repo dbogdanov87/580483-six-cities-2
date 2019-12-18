@@ -8,7 +8,7 @@ class ListOffers extends PureComponent {
   }
 
   render() {
-    const {offers, onOfferHover} = this.props;
+    const {offers, onOfferHover, onClickBookmark} = this.props;
 
     return <div className="cities__places-list places__list tabs__content">
       {
@@ -16,6 +16,7 @@ class ListOffers extends PureComponent {
           key={offer.id}
           offer={offer}
           onOfferHover={onOfferHover}
+          onClickBookmark={onClickBookmark}
         />
         )
       }
@@ -34,6 +35,7 @@ ListOffers.propTypes = {
     type: PropTypes.string.isRequired,
   })).isRequired,
   onOfferHover: PropTypes.func,
+  onClickBookmark: PropTypes.func,
 };
 
 export default ListOffers;

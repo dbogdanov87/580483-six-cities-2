@@ -14,14 +14,14 @@ exports[`Reviews Item is rendered correctly 1`] = `
         alt="Reviews avatar"
         className="reviews__avatar user__avatar"
         height="54"
-        src="str"
+        src="img/1.png"
         width="54"
       />
     </div>
     <span
       className="reviews__user-name"
     >
-      str
+      Max
     </span>
   </div>
   <div
@@ -36,7 +36,7 @@ exports[`Reviews Item is rendered correctly 1`] = `
         <span
           style={
             Object {
-              "width": "str",
+              "width": "80%",
             }
           }
         />
@@ -50,13 +50,13 @@ exports[`Reviews Item is rendered correctly 1`] = `
     <p
       className="reviews__text"
     >
-      str
+      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
     </p>
     <time
       className="reviews__time"
-      dateTime="str"
+      dateTime="10 октября"
     >
-      str
+      May 2019
     </time>
   </div>
 </li>

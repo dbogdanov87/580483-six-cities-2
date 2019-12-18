@@ -19,6 +19,7 @@ const CardOffer = (props) => {
     },
     isAuthorized,
     onOfferHover,
+    onClickBookmark
   } = props;
 
   let statusFavorites;
@@ -37,11 +38,13 @@ const CardOffer = (props) => {
         props.setFavorite(id, statusFavorites);
       }
       props.loadFavorites();
+    } else {
+      onClickBookmark();
     }
   };
 
   const bookmarkRef = React.createRef();
-  const getLinkAddress = () => {
+  const setAddress = () => {
     return `/offer/${id}`;
   };
 
@@ -60,7 +63,7 @@ const CardOffer = (props) => {
           </div>
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={getLinkAddress()}>
+        <Link to={setAddress()}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
@@ -86,7 +89,7 @@ const CardOffer = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={getLinkAddress()} className="place-card_title">{title}</Link>
+          <Link to={setAddress()} className="place-card_title">{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -109,6 +112,7 @@ CardOffer.propTypes = {
   favorites: PropTypes.array,
   setFavorite: PropTypes.func,
   loadFavorites: PropTypes.func,
+  onClickBookmark: PropTypes.func,
 
 };
 

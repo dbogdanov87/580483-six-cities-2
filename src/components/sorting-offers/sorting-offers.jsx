@@ -33,21 +33,21 @@ class SortingOffers extends React.PureComponent {
             : `places__options places__options--custom places__options`
         }
         >
-          {SORTED_OPTIONS.map(({id, name}) => (
+          {SORTED_OPTIONS.map(({ID, NAME}) => (
             <li
               className={
-                name === {sortingName}
+                NAME === {sortingName}
                   ? `places__option places__option--active`
                   : `places__option`
               }
-              key={id}
+              key={ID}
               tabIndex="0"
               onClick={
                 () => {
-                  onClickSortingSelection(name);
+                  onClickSortingSelection(NAME);
                 }
               }>
-              {name}
+              {NAME}
             </li>
           ))}
         </ul>

@@ -1,6 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import ReviewsItem from "./reivews-item.jsx";
+import {reviews} from "../../mocks/reviews.js";
 
 it(`Reviews Item is rendered correctly`, () => {
 
@@ -8,18 +9,8 @@ it(`Reviews Item is rendered correctly`, () => {
   div.id = `map`;
   document.body.appendChild(div);
 
-  const review = {
-    id: 1,
-    avatarImage: `str`,
-    userName: `str`,
-    rating: `str`,
-    reviewsText: `str`,
-    dateTime: `str`,
-    dateString: `str`
-  };
-
   const tree = renderer.create(<ReviewsItem
-    review={review}
+    review={reviews[0]}
   />
   ).toJSON();
 

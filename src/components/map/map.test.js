@@ -1,39 +1,30 @@
 import React from "react";
-import renderer from "react-test-renderer";
-import Map from "./map.jsx";
+import renderer from 'react-test-renderer';
+import Map from './map';
+import {offers} from '../../mocks/offers.js';
 
-it(`Map is rendered correctly`, () => {
+const coordinates = [52.3709553943508, 4.919309666406198];
 
-  const div = document.createElement(`div`);
-  div.id = `map`;
-  document.body.appendChild(div);
+const createNodeMock = (element) => {
+  if (element.type === `div`) {
+    return document.createElement(`div`);
+  }
+  return null;
+};
 
-  const createNodeMock = () => document.createElement(`div`);
-  const options = {createNodeMock};
-  const city = {
-    id: 2,
-    name: `Cologne`,
-    location: {
-      latitude: 50.9333300,
-      longitude: 6.9500000,
-      zoom: 12,
-    }
+const options = {createNodeMock};
+
+it(`Map component is displayed correctly`, () => {
+  const activeCardCoordinates = [50, 20];
+  const props = {
+    activeOfferCoordinates: coordinates,
+    offers,
+    activeCity: `Amsterdam`,
+    activeCardCoordinates,
   };
-  const offers = [{
-    id: 1,
-    previewImage: `img`,
-    coordinates: [52.3809553943508, 4.939309666406198],
-    price: 25,
-    isFavorite: true,
-    rating: `90%`,
-    title: `Beautiful`,
-    type: `privet`
-  }];
-  const tree = renderer.create(<Map
-    activeCity={city}
-    offers={offers}
-  />, options
-  ).toJSON();
 
-  expect(tree).toMatchSnapshot();
+  const map = renderer
+    .create(<Map {...props} />, options)
+    .toJSON();
+  expect(map).toMatchSnapshot();
 });

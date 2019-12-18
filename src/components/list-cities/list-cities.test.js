@@ -8,20 +8,11 @@ it(`CardOffer is rendered correctly`, () => {
   div.id = `map`;
   document.body.appendChild(div);
 
-  const city = {
-    id: 6,
-    name: `Dusseldorf`,
-    location: {
-      latitude: 51.2217200,
-      longitude: 6.7761600,
-      zoom: 12,
-    }
-  };
   const tree = renderer.create(
       <ListCities
-        activeCity={city}
+        activeCity={`Dusseldorf`}
         cities={[]}
-        changeCityClickHandler={jest.fn()}
+        onChangeCityClick={jest.fn()}
       />
   ).toJSON();
 

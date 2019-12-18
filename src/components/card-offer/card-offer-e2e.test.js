@@ -1,57 +1,26 @@
 import React from "react";
+import {CardOffer} from "./card-offer.jsx";
 import {configure, shallow} from "enzyme";
+import {offers} from "../../mocks/offers.js";
 import Adapter from 'enzyme-adapter-react-16';
-import CardOffer from "./card-offer.jsx";
 
 configure({adapter: new Adapter()});
 
-describe(`Tests for card offer`, () => {
-  it(`when you click on title, a callback will be called`, () => {
-    const offers = [{
-      id: 1,
-      previewImage: `img`,
-      price: 25,
-      isFavorite: true,
-      rating: `90%`,
-      title: `Beautiful`,
-      type: `privet`
-    }];
-    const onClickCardNameHandle = jest.fn();
+const props = {
+  offer: offers[0],
+  offers,
+  favorites: offers,
+  onOfferHover: jest.fn(),
+  onClickBookmark: jest.fn(),
+  setFavorite: jest.fn(),
+};
 
-    const cardOffer = shallow(<CardOffer
-      offer = {offers[0]}
-      onClickCardName={onClickCardNameHandle}
-      onMouseEnterCard={()=> {}}
-      onMouseOutCard={()=> {}}
-    />);
+it(`when you mouse enter on card, return correct information about card`, () => {
+  const onOfferHover = jest.fn();
+  const onClickBookmark = jest.fn();
+  const card = shallow(<CardOffer {...props} onOfferHover={onOfferHover} onClickBookmark={onClickBookmark}/>);
 
-    const cardName = cardOffer.find(`.place-card__name a`);
-    cardName.simulate(`click`);
+  card.simulate(`mouseOver`);
 
-    expect(onClickCardNameHandle).toHaveBeenCalledTimes(1);
-  });
-  it(`when you mouse enter on card, return correct information about card`, () => {
-    const offers = [{
-      id: 1,
-      previewImage: `img`,
-      price: 25,
-      isFavorite: true,
-      rating: `90%`,
-      title: `Beautiful`,
-      type: `privet`
-    }];
-    const onOfferHover = jest.fn();
-
-    const cardOffer = shallow(<CardOffer
-      offer={offers[0]}
-      onClickCardName={()=> {}}
-      onMouseEnterCard={onOfferHover}
-      onMouseOutCard={()=> {}}
-    />);
-
-    const offer = cardOffer.find(`.place-card`);
-    offer.simulate(`mouseenter`);
-
-    expect(onOfferHover).toHaveBeenCalledTimes(1);
-  });
+  expect(onOfferHover).toHaveBeenCalledTimes(1);
 });

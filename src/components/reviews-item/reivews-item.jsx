@@ -7,6 +7,13 @@ const ReviewsItem = (props) => {
 
   const {review} = props;
 
+  const data = new Date(review.date);
+  const monthNames = [`January`, `February`, `March`, `April`, `May`, `June`,
+    `July`, `August`, `September`, `October`, `November`, `December`
+  ];
+  const month = monthNames[data.getMonth()];
+  const year = data.getFullYear();
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -27,7 +34,7 @@ const ReviewsItem = (props) => {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="10 октября">{review.date}</time>
+        <time className="reviews__time" dateTime="10 октября">{month + ` ` + year}</time>
       </div>
     </li>);
 };

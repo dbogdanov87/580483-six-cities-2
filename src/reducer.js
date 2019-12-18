@@ -33,7 +33,7 @@ export const initialState = {
   favorites: [],
   isAuthorized: false,
   userData: {},
-  sortingName: SORTED_OPTIONS[0].name,
+  sortingName: SORTED_OPTIONS[0].NAME,
   cities: [],
   activeOfferCoordinates: []
 };

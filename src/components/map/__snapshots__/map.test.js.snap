@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Map is rendered correctly 1`] = `
+exports[`Map component is displayed correctly 1`] = `
 <div
   id="map"
   style={
