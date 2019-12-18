@@ -22,6 +22,28 @@ class Map extends PureComponent {
     this.markers = [];
   }
 
+
+  _addMarkerOffers(offers) {
+    offers.map((offer) => {
+      leaflet.marker(this._getCoordinatesByOffer(offer), {icon: this.icon})
+        .addTo(this.map);
+    });
+    this._displayActivePin(this.props.activeOfferCoordinates);
+  }
+
+  _displayActivePin(coordinates) {
+    if (coordinates.length !== 0) {
+      leaflet
+        .marker(coordinates, {icon: this.activeIcon})
+        .addTo(this.map);
+    }
+    return;
+  }
+
+  _getCoordinatesByOffer(offer) {
+    return [offer.location.latitude, offer.location.longitude];
+  }
+
   _init(activeCity, offersList, container) {
     this.city = getCityCoordinates(activeCity, offersList);
     this.map = leaflet.map(container, {
@@ -36,27 +58,6 @@ class Map extends PureComponent {
       })
       .addTo(this.map);
     this._addMarkerOffers(offersList);
-  }
-
-  _getCoordinatesByOffer(offer) {
-    return [offer.location.latitude, offer.location.longitude];
-  }
-
-  _addMarkerOffers(offers) {
-    const displayActivePin = (coordinates) => {
-      if (coordinates.length !== 0) {
-        leaflet
-          .marker(coordinates, {icon: this.activeIcon})
-          .addTo(this.map);
-      }
-      return;
-    };
-
-    offers.map((offer) => {
-      leaflet.marker(this._getCoordinatesByOffer(offer), {icon: this.icon})
-        .addTo(this.map);
-    });
-    displayActivePin(this.props.activeOfferCoordinates);
   }
 
   _removeMarkersOffers() {
