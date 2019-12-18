@@ -18,10 +18,6 @@ class MainScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isOpenSorting: false,
-    };
-
     this.getCityOffers = props.getCityOffers;
 
     if (props.cityOffers.length === 0) {
@@ -62,8 +58,6 @@ class MainScreen extends PureComponent {
     } = this.props;
 
     const cities = this.getAllCities(offers);
-
-    const {isOpenSorting} = this.state;
     const numberOffers = cityOffers.length;
 
     return (
@@ -85,7 +79,6 @@ class MainScreen extends PureComponent {
                 <b className="places__found">{numberOffers} {offers.length === 1 ? `place` : `places`} to stay in {city}</b>
                 <WithSorted
                   sortingName={sortingName}
-                  isOpenSorting={isOpenSorting}
                   toggleSortingClickHandler={this.toggleSortingClickHandler}
                   sortingSelectionClickHandler={this.sortingSelectionClickHandler}
                 />
