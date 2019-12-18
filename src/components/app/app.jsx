@@ -38,6 +38,7 @@ const App = (props) => {
 
 App.propTypes = {
   offers: PropTypes.array.isRequired,
+  city: PropTypes.string.isRequired,
   isAuthorized: PropTypes.bool,
   getListOffers: PropTypes.func,
 };
