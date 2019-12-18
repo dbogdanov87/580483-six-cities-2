@@ -7,20 +7,20 @@ class ListOffers extends PureComponent {
     super(props);
   }
 
-  onClickCardNameHandle(id) {
+  handleClickCardName(id) {
     location.pathname = `/offer` + id;
   }
 
   render() {
-    const {offers, onOfferHoverHandler} = this.props;
+    const {offers, onOfferHover} = this.props;
 
     return <div className="cities__places-list places__list tabs__content">
       {
         offers.map((offer) => <CardOffer
           key={offer.id}
           offer={offer}
-          onClickCardName={this.onClickCardNameHandle}
-          onOfferHoverHandler={onOfferHoverHandler}
+          onClickCardName={this.handleClickCardName}
+          onOfferHover={onOfferHover}
         />
         )
       }
@@ -38,7 +38,7 @@ ListOffers.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   })).isRequired,
-  onOfferHoverHandler: PropTypes.func,
+  onOfferHover: PropTypes.func,
 };
 
 export default ListOffers;

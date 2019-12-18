@@ -25,8 +25,8 @@ class MainScreen extends PureComponent {
       props.getCityOffers(cityOffers);
     }
 
-    this.sortingSelectionClickHandle = this.sortingSelectionClickHandle.bind(this);
-    this.offerHoverHandle = this.offerHoverHandle.bind(this);
+    this.handleClickSortingSelection = this.handleClickSortingSelection.bind(this);
+    this.handleOfferHover = this.handleOfferHover.bind(this);
   }
 
   getAllCities(offers) {
@@ -34,13 +34,13 @@ class MainScreen extends PureComponent {
     return Array.from(uniqueCities).slice(0, MAX_COUNT_CITIES);
   }
 
-  offerHoverHandle(id) {
+  handleOfferHover(id) {
     const activeOffer = this.props.offers.find((item) => item.id === id);
     const coordinates = [activeOffer.location.latitude, activeOffer.location.longitude];
     this.props.setActivePinCoordinates(coordinates);
   }
 
-  sortingSelectionClickHandle(sortingName) {
+  handleClickSortingSelection(sortingName) {
     const {changeSortingName, cityOffers, getCityOffers} = this.props;
     changeSortingName(sortingName);
     let sorted = getOffersByCity(cityOffers, this.props.city);
@@ -68,7 +68,7 @@ class MainScreen extends PureComponent {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <ListCities cities={cities} activeCity={city} cityOffers={cityOffers} offers={offers} sortingName={sortingName} changeCityClickHandler={changeCityClickHandler} />
+                <ListCities cities={cities} activeCity={city} cityOffers={cityOffers} offers={offers} sortingName={sortingName} onChangeCityClick={changeCityClickHandler} />
               </ul>
             </section>
           </div>
@@ -79,11 +79,11 @@ class MainScreen extends PureComponent {
                 <b className="places__found">{numberOffers} {offers.length === 1 ? `place` : `places`} to stay in {city}</b>
                 <WithSorted
                   sortingName={sortingName}
-                  sortingSelectionClickHandler={this.sortingSelectionClickHandle}
+                  onClickSortingSelection={this.handleClickSortingSelection}
                 />
                 {
                   numberOffers > 0
-                    ? <ListOffers offers={cityOffers} onOfferHoverHandler={this.offerHoverHandle} redirectToLogin={this.redirectToLoginHandle}/>
+                    ? <ListOffers offers={cityOffers} onOfferHover={this.handleOfferHover} />
                     : <EmptyOffers city={city}/>
                 }
               </section>

@@ -14,14 +14,16 @@ class SortingOffers extends React.PureComponent {
     const {
       sortingName,
       isOpenSorting,
-      toggleSortingClickHandle,
-      sortingSelectionClickHandle
+      onClickToggleSorting,
+      onClickSortingSelection
     } = this.props;
+
+    console.log(sortingName);
 
     return (
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
-        <span className="places__sorting-type" tabIndex="0" onClick={() => toggleSortingClickHandle()} ref={this.sortTitleRef}>
+        <span className="places__sorting-type" tabIndex="0" onClick={() => onClickToggleSorting()} ref={this.sortTitleRef}>
           {sortingName}
           <svg className="places__sorting-arrow" width="7" height="4">
             <use xlinkHref="#icon-arrow-select" />
@@ -44,7 +46,7 @@ class SortingOffers extends React.PureComponent {
               tabIndex="0"
               onClick={
                 () => {
-                  sortingSelectionClickHandle(name);
+                  onClickSortingSelection(name);
                 }
               }>
               {name}
@@ -59,8 +61,8 @@ class SortingOffers extends React.PureComponent {
 SortingOffers.propTypes = {
   sortingName: PropTypes.string.isRequired,
   isOpenSorting: PropTypes.bool.isRequired,
-  toggleSortingClickHandle: PropTypes.func,
-  sortingSelectionClickHandle: PropTypes.func,
+  onClickToggleSorting: PropTypes.func,
+  onCLickSortingSelection: PropTypes.func,
 };
 
 export default SortingOffers;

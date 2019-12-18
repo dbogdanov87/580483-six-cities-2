@@ -18,7 +18,7 @@ const CardOffer = (props) => {
       type
     },
     isAuthorized,
-    onOfferHoverHandler,
+    onOfferHover,
   } = props;
 
   let statusFavorites;
@@ -50,7 +50,7 @@ const CardOffer = (props) => {
       key={title + id}
       onMouseOver={
         () => {
-          onOfferHoverHandler(id);
+          onOfferHover(id);
         }
       }>
       {
@@ -105,7 +105,7 @@ CardOffer.propTypes = {
     type: PropTypes.string.isRequired,
   }).isRequired,
   onClickCardName: PropTypes.func,
-  onOfferHoverHandler: PropTypes.func,
+  onOfferHover: PropTypes.func,
   isAuthorized: PropTypes.bool,
   favorites: PropTypes.array,
   setFavorite: PropTypes.func,
