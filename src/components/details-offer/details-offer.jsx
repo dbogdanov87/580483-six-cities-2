@@ -163,7 +163,7 @@ const DetailsOffer = (props) => {
                 return <CardOffer
                   offer={nearOffer}
                   key={nearOffer.id + nearOffer.title}
-                  onOfferHoverHandler={offerHoverHandler}
+                  onOfferHover={offerHoverHandler}
                 />;
               })}
             </div>

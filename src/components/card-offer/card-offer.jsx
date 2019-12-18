@@ -104,7 +104,6 @@ CardOffer.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
-  onClickCardName: PropTypes.func,
   onOfferHover: PropTypes.func,
   isAuthorized: PropTypes.bool,
   favorites: PropTypes.array,
