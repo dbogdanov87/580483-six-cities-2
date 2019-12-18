@@ -41,15 +41,16 @@ const withFormSubmit = (Component) => {
 
     _textAreaChangeHandler(evt) {
       this.setState({textComment: evt.target.value});
-      if (this.state.textComment.length >= MIN_LENGTH_COMMENT_REVIWS) {
+      if (this.state.textComment.length >= MIN_LENGTH_COMMENT_REVIWS
+        || this.state.textComment.length <= MAX_LENGTH_COMMENT_REVIEWS) {
         this.setState.isTextCorrect = true;
-        this.buttonRef.current.disabled = true;
 
         if (this.state.isStarsChosen) {
           this.buttonRef.current.disabled = false;
         }
       }
-      if (this.state.textComment.length >= MAX_LENGTH_COMMENT_REVIEWS) {
+      if (this.state.textComment.length >= MAX_LENGTH_COMMENT_REVIEWS
+        || this.state.textComment.length <= MIN_LENGTH_COMMENT_REVIWS) {
         this.buttonRef.current.disabled = true;
       }
     }

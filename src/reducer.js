@@ -26,7 +26,7 @@ const initialState = {
   offers: [],
   cityOffers: [],
   city: DEFAULT_CITY,
-  reviews: [],
+  reviews: null,
   favorites: [],
   isAuthorized: false,
   userData: {},
@@ -158,6 +158,7 @@ export const Operations = {
     return api.get(`/comments/` + id)
       .then((response) => {
         dispatch(ActionCreator.getReviews(response.data));
+        console.log(response.data);
       });
   },
 

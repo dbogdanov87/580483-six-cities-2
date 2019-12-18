@@ -20,11 +20,15 @@ const DetailsOffer = (props) => {
   const avatarUrl = `../` + offer.host.avatar_url;
   const nearbyOffers = getOffersByCity(offers, city).slice(0, MAX_NEAR_PLACES);
   const currentOfferCoordinates = [offer.location.latitude, offer.location.longitude];
+  let listReviews = [];
 
-  if (props.reviews.length === 0) {
+
+  if (props.reviews === null)
     props.loadReviews(id);
+
+  if (props.reviews !== null) {
+    listReviews = props.reviews.slice(0, MAX_COUNT_REVIEWS).sort((a, b) => new Date(b.date) - new Date(a.date));
   }
-  let listReviews = props.reviews.slice(0, MAX_COUNT_REVIEWS).sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const offerHoverHandler = (offerItem) => {
     return offerItem;
@@ -140,7 +144,7 @@ const DetailsOffer = (props) => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{listReviews.length}</span></h2>
-                {<ReviewsList reviews={listReviews}/>}
+                {props.reviews === null || props.reviews.length === 0 ? `` : <ReviewsList reviews={listReviews}/>}
                 {props.isAuthorized && <CommentWrapped submitClick={submitHandler}/>}
               </section>
             </div>

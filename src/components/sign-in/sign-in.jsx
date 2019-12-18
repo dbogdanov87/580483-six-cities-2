@@ -27,6 +27,15 @@ class SignIn extends PureComponent {
     return false;
   }
 
+  _validateEmail(email) {
+    const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2})$/;
+    if(reg.test(email) === false) {
+      alert('Enter a valid e-mail. Example - test@test.te');
+      return false;
+    }
+    return true;
+  }
+
   _inputEmailChangeHandler(evt) {
     if (this._checkInput(evt.target.value)) {
       this.authorizeData.email = evt.target.value;
@@ -42,9 +51,11 @@ class SignIn extends PureComponent {
   _submitLoginFormHandler(evt) {
     evt.preventDefault();
     if (this.authorizeData.email && this.authorizeData.password) {
-      this.props.setUserData(this.authorizeData.email, this.authorizeData.password);
-      this.props.loadFavorites();
-      this.props.history.push(`/`);
+      if(this._validateEmail(this.authorizeData.email) === true) {
+        this.props.setUserData(this.authorizeData.email, this.authorizeData.password);
+        this.props.loadFavorites();
+        this.props.history.push(`/`);
+      }
     }
   }
 
@@ -87,7 +98,7 @@ SignIn.propTypes = {
   userData: PropTypes.object,
   setUserData: PropTypes.func,
   loadFavorites: PropTypes.func,
-  history: PropTypes.string
+  history: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
