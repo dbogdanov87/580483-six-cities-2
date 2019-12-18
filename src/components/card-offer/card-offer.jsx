@@ -10,7 +10,7 @@ const CardOffer = (props) => {
   const {
     offer: {
       id,
-      preview_image,
+      previewImage,
       price,
       is_premium,
       rating,
@@ -61,7 +61,7 @@ const CardOffer = (props) => {
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={getLinkAddress()}>
-          <img className="place-card__image" src={preview_image} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -96,7 +96,7 @@ const CardOffer = (props) => {
 CardOffer.propTypes = {
   offer: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    preview_image: PropTypes.string.isRequired,
+    previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     is_favorite: PropTypes.bool.isRequired,
     rating: PropTypes.number.isRequired,

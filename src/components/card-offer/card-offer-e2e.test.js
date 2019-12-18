@@ -9,7 +9,7 @@ describe(`Tests for card offer`, () => {
   it(`when you click on title, a callback will be called`, () => {
     const offers = [{
       id: 1,
-      preview_image: `img`,
+      previewImage: `img`,
       price: 25,
       is_favorite: true,
       rating: `90%`,
@@ -33,7 +33,7 @@ describe(`Tests for card offer`, () => {
   it(`when you mouse enter on card, return correct information about card`, () => {
     const offers = [{
       id: 1,
-      preview_image: `img`,
+      previewImage: `img`,
       price: 25,
       is_favorite: true,
       rating: `90%`,

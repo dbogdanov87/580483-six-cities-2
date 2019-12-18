@@ -1,4 +1,8 @@
 import {SORTED_OPTIONS, DEFAULT_CITY, ACTION_TYPES} from "../src/constants.js";
+import {convertCommentsToCamelCase,
+  convertUserToCamelCase,
+  convertOfferToCamelCase,
+  convertOffersToCamelCase} from "./utils/utils.js"
 
 export const getOffersByCity = (offers, cityName) => {
   return offers.filter((offer) => offer.city.name === cityName);
@@ -136,35 +140,35 @@ export const Operations = {
   getListOffers: () => (dispatch, state, api) => {
     return api.get(`/hotels`)
       .then((response) => {
-        dispatch(ActionCreator.getListOffers(response.data));
+        dispatch(ActionCreator.getListOffers(convertOffersToCamelCase(response.data)));
       });
   },
 
   getReviews: (id) => (dispatch, state, api) => {
     return api.get(`/comments/` + id)
       .then((response) => {
-        dispatch(ActionCreator.getReviews(response.data));
-      });
-  },
-
-  loadFavorites: () => (dispatch, state, api) => {
-    return api.get(`/favorite`)
-      .then((response) => {
-        dispatch(ActionCreator.getFavorites(response.data));
+        dispatch(ActionCreator.getReviews(convertCommentsToCamelCase(response.data)));
       });
   },
 
   loadReviews: (id) => (dispatch, state, api) => {
     return api.get(`/comments/` + id)
       .then((response) => {
-        dispatch(ActionCreator.getReviews(response.data));
+        dispatch(ActionCreator.getReviews(convertCommentsToCamelCase(response.data)));
+      });
+  },
+
+  loadFavorites: () => (dispatch, state, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.getFavorites(convertOfferToCamelCase(response.data)));
       });
   },
 
   sendComment: (id, comment) => (dispatch, state, api) => {
     return api.post(`/comments/` + id, comment)
       .then((response) => {
-        dispatch(ActionCreator.getReviews(response.data));
+        dispatch(ActionCreator.getReviews(convertCommentsToCamelCase(response.data)));
       });
   },
 
@@ -179,7 +183,7 @@ export const Operations = {
     };
     return api.post(`/login`, userParams)
       .then((response) => {
-        dispatch(ActionCreator.setUserData(response.data));
+        dispatch(ActionCreator.setUserData(convertUserToCamelCase(response.data)));
       }).then(dispatch(ActionCreator.isAuthorized(true)));
   },
 

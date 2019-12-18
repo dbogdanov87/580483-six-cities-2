@@ -11,7 +11,7 @@ jest.mock(`../map/map.jsx`);
 it(`App is rendered correctly`, () => {
   const offers = [{
     id: 1,
-    preview_image: `img`,
+    previewImage: `img`,
     price: 25,
     is_favorite: true,
     rating: `90%`,

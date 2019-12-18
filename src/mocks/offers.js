@@ -5,7 +5,7 @@ const offers = [
       id: 4,
       name: `Amsterdam`
     },
-    preview_image: `img/apartment-01.jpg`,
+    previewImage: `img/apartment-01.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Premium`,
     coordinates: [52.3909553943508, 4.85309666406198],
@@ -34,7 +34,7 @@ const offers = [
       id: 4,
       name: `Amsterdam`
     },
-    preview_image: `img/room.jpg`,
+    previewImage: `img/room.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [52.369553943508, 4.85309666406198],
@@ -64,7 +64,7 @@ const offers = [
       id: 3,
       name: `Brussels`
     },
-    preview_image: `img/apartment-02.jpg`,
+    previewImage: `img/apartment-02.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [52.3909553943508, 4.929309666406198],
@@ -94,7 +94,7 @@ const offers = [
       id: 3,
       name: `Brussels`
     },
-    preview_image: `img/apartment-03.jpg`,
+    previewImage: `img/apartment-03.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Premium`,
     coordinates: [52.3809553943508, 4.939309666406198],
@@ -122,7 +122,7 @@ const offers = [
       id: 2,
       name: `Cologne`
     },
-    preview_image: `img/apartment-01.jpg`,
+    previewImage: `img/apartment-01.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Premium`,
     coordinates: [52.3909553943508, 4.85309666406198],
@@ -152,7 +152,7 @@ const offers = [
       id: 2,
       name: `Cologne`
     },
-    preview_image: `img/room.jpg`,
+    previewImage: `img/room.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [52.369553943508, 4.85309666406198],
@@ -182,7 +182,7 @@ const offers = [
       id: 1,
       name: `Paris`
     },
-    preview_image: `img/apartment-02.jpg`,
+    previewImage: `img/apartment-02.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [48.8744200, 2.34201000],
@@ -212,7 +212,7 @@ const offers = [
       id: 1,
       name: `Paris`
     },
-    preview_image: `img/apartment-03.jpg`,
+    previewImage: `img/apartment-03.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Premium`,
     coordinates: [48.8644200, 2.34901000],
@@ -240,7 +240,7 @@ const offers = [
       id: 1,
       name: `Paris`
     },
-    preview_image: `img/apartment-01.jpg`,
+    previewImage: `img/apartment-01.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Premium`,
     coordinates: [48.8534100, 2.3488000],
@@ -270,7 +270,7 @@ const offers = [
       id: 5,
       name: `Hamburg`,
     },
-    preview_image: `img/room.jpg`,
+    previewImage: `img/room.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [52.369553943508, 4.85309666406198],
@@ -300,7 +300,7 @@ const offers = [
       id: 6,
       name: `Dusseldorf`,
     },
-    preview_image: `img/apartment-02.jpg`,
+    previewImage: `img/apartment-02.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [52.3909553943508, 4.929309666406198],
@@ -330,7 +330,7 @@ const offers = [
       id: 6,
       name: `Dusseldorf`,
     },
-    preview_image: `img/apartment-03.jpg`,
+    previewImage: `img/apartment-03.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Premium`,
     coordinates: [52.3809553943508, 4.939309666406198],

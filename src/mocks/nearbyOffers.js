@@ -1,7 +1,7 @@
 const nearbyOffers = [
   {
     id: 1,
-    preview_image: `img/apartment-01.jpg`,
+    previewImage: `img/apartment-01.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Premium`,
     coordinates: [52.3909553943508, 4.85309666406198],
@@ -27,7 +27,7 @@ const nearbyOffers = [
 
   {
     id: 2,
-    preview_image: `img/room.jpg`,
+    previewImage: `img/room.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [52.369553943508, 4.85309666406198],
@@ -53,7 +53,7 @@ const nearbyOffers = [
 
   {
     id: 3,
-    preview_image: `img/apartment-02.jpg`,
+    previewImage: `img/apartment-02.jpg`,
     cardGalleryImages: [`img/room.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     cardMark: `Not premium`,
     coordinates: [52.3909553943508, 4.929309666406198],

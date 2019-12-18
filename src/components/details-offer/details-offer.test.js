@@ -9,7 +9,7 @@ it(`Details Offer is rendered correctly`, () => {
   document.body.appendChild(div);
 
   const offers = [{
-    preview_image: `img`,
+    previewImage: `img`,
     cardGalleryImages: [`img/room.jpg`],
     cardMark: `Premium`,
     price: 250,
@@ -41,7 +41,7 @@ it(`Details Offer is rendered correctly`, () => {
   }];
   const nearbyOffers = [{
     id: 1,
-    preview_image: `img`,
+    previewImage: `img`,
     cardGalleryImages: [`img/room.jpg`],
     coordinates: [0, 0],
     cardMark: `Premium`,
