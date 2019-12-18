@@ -18,7 +18,7 @@ const CardOffer = (props) => {
       type
     },
     isAuthorized,
-    offerHoverHandler,
+    onOfferHoverHandler,
   } = props;
 
   let statusFavorites;
@@ -41,7 +41,7 @@ const CardOffer = (props) => {
   };
 
   const bookmarkRef = React.createRef();
-  const linkAddress = () => {
+  const getLinkAddress = () => {
     return `/offer/${id}`;
   };
 
@@ -50,7 +50,7 @@ const CardOffer = (props) => {
       key={title + id}
       onMouseOver={
         () => {
-          offerHoverHandler(id);
+          onOfferHoverHandler(id);
         }
       }>
       {
@@ -60,7 +60,7 @@ const CardOffer = (props) => {
           </div>
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={linkAddress()}>
+        <Link to={getLinkAddress()}>
           <img className="place-card__image" src={preview_image} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
@@ -86,7 +86,7 @@ const CardOffer = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={linkAddress()} className="place-card_title">{title}</Link>
+          <Link to={getLinkAddress()} className="place-card_title">{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -105,7 +105,7 @@ CardOffer.propTypes = {
     type: PropTypes.string.isRequired,
   }).isRequired,
   onClickCardName: PropTypes.func,
-  offerHoverHandler: PropTypes.func,
+  onOfferHoverHandler: PropTypes.func,
   isAuthorized: PropTypes.bool,
   favorites: PropTypes.array,
   setFavorite: PropTypes.func,

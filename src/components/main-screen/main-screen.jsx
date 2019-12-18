@@ -84,7 +84,7 @@ class MainScreen extends PureComponent {
                 />
                 {
                   numberOffers > 0
-                    ? <ListOffers offers={cityOffers} offerHoverHandler={this.offerHoverHandler} redirectToLogin={this.redirectToLoginHandler}/>
+                    ? <ListOffers offers={cityOffers} onOfferHoverHandler={this.offerHoverHandler} redirectToLogin={this.redirectToLoginHandler}/>
                     : <EmptyOffers city={city}/>
                 }
               </section>

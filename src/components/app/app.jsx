@@ -20,7 +20,7 @@ const App = (props) => {
     <Router history={history}>
       <Switch>
         <Route exact path={`/`} component={MainScreen} />
-        <Route exact path={`/login`} component={SignIn} />
+        <Route exact path={`/login`} component={isAuthorized ? MainScreen : SignIn} />
         <Route exact path={`/offer/:id`} component={DetailsOffer} />
         <Route exact path={`/favorites`} component={isAuthorized ? FavoritesList : SignIn} />
         <Route render={ () => <div style={

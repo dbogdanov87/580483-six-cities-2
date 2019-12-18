@@ -12,7 +12,7 @@ class ListOffers extends PureComponent {
   }
 
   render() {
-    const {offers, offerHoverHandler} = this.props;
+    const {offers, onOfferHoverHandler} = this.props;
 
     return <div className="cities__places-list places__list tabs__content">
       {
@@ -20,7 +20,7 @@ class ListOffers extends PureComponent {
           key={offer.id}
           offer={offer}
           onClickCardName={this.onClickCardNameHandler}
-          offerHoverHandler={offerHoverHandler}
+          onOfferHoverHandler={onOfferHoverHandler}
         />
         )
       }
@@ -38,7 +38,7 @@ ListOffers.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   })).isRequired,
-  offerHoverHandler: PropTypes.func,
+  onOfferHoverHandler: PropTypes.func,
 };
 
 export default ListOffers;
