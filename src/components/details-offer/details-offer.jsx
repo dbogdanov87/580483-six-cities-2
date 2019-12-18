@@ -23,8 +23,9 @@ const DetailsOffer = (props) => {
   let listReviews = [];
 
 
-  if (props.reviews === null)
+  if (props.reviews === null) {
     props.loadReviews(id);
+  }
 
   if (props.reviews !== null) {
     listReviews = props.reviews.slice(0, MAX_COUNT_REVIEWS).sort((a, b) => new Date(b.date) - new Date(a.date));

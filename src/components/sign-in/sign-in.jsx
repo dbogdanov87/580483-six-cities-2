@@ -29,8 +29,7 @@ class SignIn extends PureComponent {
 
   _validateEmail(email) {
     const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2})$/;
-    if(reg.test(email) === false) {
-      alert('Enter a valid e-mail. Example - test@test.te');
+    if (reg.test(email) !== false) {
       return false;
     }
     return true;
@@ -51,7 +50,7 @@ class SignIn extends PureComponent {
   _handleSubmitLoginForm(evt) {
     evt.preventDefault();
     if (this.authorizeData.email && this.authorizeData.password) {
-      if(this._validateEmail(this.authorizeData.email) === true) {
+      if (this._validateEmail(this.authorizeData.email) === true) {
         this.props.setUserData(this.authorizeData.email, this.authorizeData.password);
         this.props.loadFavorites();
         this.props.history.push(`/`);

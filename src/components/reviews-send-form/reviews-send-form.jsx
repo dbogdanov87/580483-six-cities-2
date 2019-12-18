@@ -71,13 +71,13 @@ class ReviewsSendForm extends PureComponent {
 
 ReviewsSendForm.propTypes = {
   onSubmitForm: PropTypes.func,
-  starsChangeHandler: PropTypes.func,
+  onChangeStars: PropTypes.func,
   textComment: PropTypes.string,
   starsRef: PropTypes.object,
   formRef: PropTypes.object,
   starRef: PropTypes.object,
   textRef: PropTypes.object,
-  changeHandler: PropTypes.func,
+  onChangeTextArea: PropTypes.func,
   buttonRef: PropTypes.object,
 };
 

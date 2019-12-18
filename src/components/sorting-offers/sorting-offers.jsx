@@ -60,7 +60,7 @@ SortingOffers.propTypes = {
   sortingName: PropTypes.string.isRequired,
   isOpenSorting: PropTypes.bool.isRequired,
   onClickToggleSorting: PropTypes.func,
-  onCLickSortingSelection: PropTypes.func,
+  onClickSortingSelection: PropTypes.func,
 };
 
 export default SortingOffers;
